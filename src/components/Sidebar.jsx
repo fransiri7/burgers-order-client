@@ -147,10 +147,7 @@ export default function PersistentDrawerLeft() {
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                <Typography paragraph>ACA VAN A IR LOS DATOS DE LAS HAMBURGUESAS</Typography>
-                <Typography>
-                    <img src="https://www.clarin.com/img/2021/06/17/LC25eDtCT_1200x630__1.jpg" alt="not found" />
-                </Typography>
+                <div style={{ backgroundColor: "red", height: "80vh", width: "100%" }}>TEST</div>
             </Main>
         </Box>
     );
