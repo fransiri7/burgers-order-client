@@ -2,19 +2,19 @@ import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import {
     Box,
-    Drawer,
     CssBaseline,
-    Toolbar,
-    List,
-    Typography,
     Divider,
+    Drawer,
+    IconButton,
+    List,
     ListItem,
     ListItemButton,
     ListItemIcon,
-    ListItemText
+    ListItemText,
+    Toolbar,
+    Typography
 } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
-import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -23,7 +23,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import FormatListNumberedSharpIcon from "@mui/icons-material/FormatListNumberedSharp";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
-const drawerWidth = 240;
+const drawerWidth = 190;
 
 const Main = styled("main", { shouldForwardProp: prop => prop !== "open" })(({ theme, open }) => ({
     flexGrow: 1,
@@ -63,7 +63,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     display: "flex",
     alignItems: "center",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: "flex-end"
 }));
