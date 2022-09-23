@@ -1,27 +1,12 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
-import {
-    Box,
-    CssBaseline,
-    Divider,
-    Drawer,
-    IconButton,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Toolbar,
-    Typography
-} from "@mui/material";
-import MuiAppBar from "@mui/material/AppBar";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import CategoryIcon from "@mui/icons-material/Category";
 import FormatListNumberedSharpIcon from "@mui/icons-material/FormatListNumberedSharp";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import Navbar from "./Navbar";
 
 const drawerWidth = 190;
 
@@ -39,23 +24,6 @@ const Main = styled("main", { shouldForwardProp: prop => prop !== "open" })(({ t
             duration: theme.transitions.duration.enteringScreen
         }),
         marginLeft: 0
-    })
-}));
-
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: prop => prop !== "open"
-})(({ theme, open }) => ({
-    transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
-    }),
-    ...(open && {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: `${drawerWidth}px`,
-        transition: theme.transitions.create(["margin", "width"], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen
-        })
     })
 }));
 
@@ -82,26 +50,7 @@ export default function PersistentDrawerLeft() {
     return (
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        sx={{ mr: 2, ...(open && { display: "none" }) }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-
-                    <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                        <LunchDiningIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Burgers Order
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <Navbar open={open} handleDrawerOpen={handleDrawerOpen} />
             <Drawer
                 sx={{
                     width: drawerWidth,
