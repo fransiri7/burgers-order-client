@@ -1,6 +1,6 @@
-import * as React from "react";
+import React from "react";
 import { styled, useTheme } from "@mui/material/styles";
-import { Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon } from "@mui/material";
+import { Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
@@ -35,7 +35,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     justifyContent: "flex-end"
 }));
 
-export default function Sidebar() {
+export function Dashboard() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -47,12 +47,12 @@ export default function Sidebar() {
         setOpen(false);
     };
 
-    const buildListItem = (item, icon) => {
+    const buildListItem = (itemName, icon) => {
         return (
             <ListItem disablePadding>
                 <ListItemButton>
                     <ListItemIcon>{icon}</ListItemIcon>
-                    {item}
+                    <ListItemText primary={itemName} />
                 </ListItemButton>
             </ListItem>
         );
@@ -90,11 +90,11 @@ export default function Sidebar() {
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                <div style={{ height: "80vh", width: "100%", justifyContent: "center" }}>
+                <div style={{ height: "80vh", width: "100%", display: "flex", justifyContent: "center" }}>
                     <img
                         src="https://www.abc.com.py/resizer/6_cADQAlpO4g57sL4wLqlIF5d7Q=/910x590/smart/arc-anglerfish-arc2-prod-abccolor.s3.amazonaws.com/public/DKHC7JKNJNGG3GBLLH6V2UDQLE.jpg"
                         alt=""
-                        width="80%"
+                        width="85%"
                         height="100%"
                     />
                 </div>

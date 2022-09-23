@@ -1,10 +1,10 @@
 import React from "react";
-import Sidebar from "./components/Sidebar";
+import { Dashboard } from "./components/dashboard/Dashboard";
 
 function App() {
     return (
         <>
-            <Sidebar />
+            <Dashboard />
         </>
     );
 }
