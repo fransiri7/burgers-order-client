@@ -7,6 +7,10 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import FormatListNumberedSharpIcon from "@mui/icons-material/FormatListNumberedSharp";
 import HomeIcon from "@mui/icons-material/Home";
 import Navbar from "./Navbar";
+import { Products } from "../product/Products";
+import { Orders } from "../order/Orders";
+import { Routes, Route } from "react-router-dom";
+import { Home } from "../home/Home";
 
 const drawerWidth = 190;
 
@@ -47,7 +51,7 @@ export function Dashboard() {
         setOpen(false);
     };
 
-    const buildListItem = (itemName, icon) => {
+    const buildListItem = (itemName, icon, Navigate) => {
         return (
             <ListItem disablePadding>
                 <ListItemButton>
@@ -91,12 +95,11 @@ export function Dashboard() {
             <Main open={open}>
                 <DrawerHeader />
                 <div style={{ height: "80vh", width: "100%", display: "flex", justifyContent: "center" }}>
-                    <img
-                        src="https://www.abc.com.py/resizer/6_cADQAlpO4g57sL4wLqlIF5d7Q=/910x590/smart/arc-anglerfish-arc2-prod-abccolor.s3.amazonaws.com/public/DKHC7JKNJNGG3GBLLH6V2UDQLE.jpg"
-                        alt=""
-                        width="85%"
-                        height="100%"
-                    />
+                    <Routes>
+                        <Route exact path="/" element={<Home />} />
+                        <Route path="/products" element={<Products />} />
+                        <Route path="/orders" element={<Orders />} />
+                    </Routes>
                 </div>
             </Main>
         </Box>
