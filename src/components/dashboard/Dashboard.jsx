@@ -7,6 +7,7 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import FormatListNumberedSharpIcon from "@mui/icons-material/FormatListNumberedSharp";
 import HomeIcon from "@mui/icons-material/Home";
 import Navbar from "./Navbar";
+import { ProductsList } from "../../modules/product/ProductsList";
 
 const drawerWidth = 190;
 
@@ -91,12 +92,13 @@ export function Dashboard() {
             <Main open={open}>
                 <DrawerHeader />
                 <div style={{ height: "80vh", width: "100%", display: "flex", justifyContent: "center" }}>
-                    <img
+                    {/* <img
                         src="https://www.abc.com.py/resizer/6_cADQAlpO4g57sL4wLqlIF5d7Q=/910x590/smart/arc-anglerfish-arc2-prod-abccolor.s3.amazonaws.com/public/DKHC7JKNJNGG3GBLLH6V2UDQLE.jpg"
                         alt=""
                         width="85%"
                         height="100%"
-                    />
+                    /> */}
+                    <ProductsList />
                 </div>
             </Main>
         </Box>
