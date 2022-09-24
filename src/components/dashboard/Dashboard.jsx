@@ -7,10 +7,10 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import FormatListNumberedSharpIcon from "@mui/icons-material/FormatListNumberedSharp";
 import HomeIcon from "@mui/icons-material/Home";
 import Navbar from "./Navbar";
-import { Products } from "../product/Products";
-import { Orders } from "../order/Orders";
-import { Routes, Route } from "react-router-dom";
-import { Home } from "../home/Home";
+import { ProductsList } from "../../modules/product/ProductsList";
+import { Orders } from "../../modules/order/Orders";
+import { Routes, Route, NavLink } from "react-router-dom";
+import { Home } from "../../modules/home/Home";
 
 const drawerWidth = 190;
 
@@ -51,17 +51,32 @@ export function Dashboard() {
         setOpen(false);
     };
 
-    const buildListItem = (itemName, icon, Navigate) => {
-        return (
-            <ListItem disablePadding>
-                <ListItemButton>
-                    <ListItemIcon>{icon}</ListItemIcon>
-                    <ListItemText primary={itemName} />
-                </ListItemButton>
-            </ListItem>
-        );
+    const active = {
+        color: "red",
+        textDecoration: "none"
     };
 
+    const disactive = {
+        textDecoration: "none",
+        default: {
+            color: "black"
+        },
+        Hovered: {
+            color: "black"
+        }
+    };
+    const buildListItem = (itemName, icon, navigateTo) => {
+        return (
+            <NavLink end to={navigateTo} style={({ isActive }) => (isActive ? active : disactive)}>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>{icon}</ListItemIcon>
+                        <ListItemText primary={itemName} />
+                    </ListItemButton>
+                </ListItem>
+            </NavLink>
+        );
+    };
     return (
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
@@ -86,10 +101,10 @@ export function Dashboard() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {buildListItem("Home", <HomeIcon />)}
+                    {buildListItem("Home", <HomeIcon />, "/")}
                     <Divider />
-                    {buildListItem("Products", <RestaurantIcon />)}
-                    {buildListItem("Orders", <FormatListNumberedSharpIcon />)}
+                    {buildListItem("Products", <RestaurantIcon />, "/products")}
+                    {buildListItem("Orders", <FormatListNumberedSharpIcon />, "/orders")}
                 </List>
             </Drawer>
             <Main open={open}>
@@ -97,7 +112,7 @@ export function Dashboard() {
                 <div style={{ height: "80vh", width: "100%", display: "flex", justifyContent: "center" }}>
                     <Routes>
                         <Route exact path="/" element={<Home />} />
-                        <Route path="/products" element={<Products />} />
+                        <Route path="/products" element={<ProductsList />} />
                         <Route path="/orders" element={<Orders />} />
                     </Routes>
                 </div>
