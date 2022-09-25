@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -41,7 +41,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export function Dashboard() {
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -52,22 +52,18 @@ export function Dashboard() {
     };
 
     const active = {
-        color: "red",
+        color: theme.palette.primary.main,
         textDecoration: "none"
     };
 
-    const disactive = {
-        textDecoration: "none",
-        default: {
-            color: "black"
-        },
-        Hovered: {
-            color: "black"
-        }
+    const inactive = {
+        color: theme.palette.secondary.dark,
+        textDecoration: "none"
     };
-    const buildListItem = (itemName, icon, navigateTo) => {
+
+    const buildListItem = (itemName, icon, route) => {
         return (
-            <NavLink end to={navigateTo} style={({ isActive }) => (isActive ? active : disactive)}>
+            <NavLink end to={route} style={({ isActive }) => (isActive ? active : inactive)}>
                 <ListItem disablePadding>
                     <ListItemButton>
                         <ListItemIcon>{icon}</ListItemIcon>
@@ -111,7 +107,7 @@ export function Dashboard() {
                 <DrawerHeader />
                 <div style={{ height: "80vh", width: "100%", display: "flex", justifyContent: "center" }}>
                     <Routes>
-                        <Route exact path="/" element={<Home />} />
+                        <Route path="/" element={<Home />} />
                         <Route path="/products" element={<ProductsList />} />
                         <Route path="/orders" element={<Orders />} />
                     </Routes>
