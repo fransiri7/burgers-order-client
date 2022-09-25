@@ -91,9 +91,7 @@ export function Dashboard() {
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                <div style={{ height: "80vh", width: "100%", display: "flex", justifyContent: "center" }}>
-                    <ProductsList />
-                </div>
+                <ProductsList />
             </Main>
         </Box>
     );
