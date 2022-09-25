@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -8,6 +8,9 @@ import FormatListNumberedSharpIcon from "@mui/icons-material/FormatListNumberedS
 import HomeIcon from "@mui/icons-material/Home";
 import Navbar from "./Navbar";
 import { ProductsList } from "../../modules/product/ProductsList";
+import { Orders } from "../../modules/order/Orders";
+import { Routes, Route, NavLink } from "react-router-dom";
+import { Home } from "../../modules/home/Home";
 
 const drawerWidth = 190;
 
@@ -38,7 +41,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export function Dashboard() {
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -48,17 +51,28 @@ export function Dashboard() {
         setOpen(false);
     };
 
-    const buildListItem = (itemName, icon) => {
-        return (
-            <ListItem disablePadding>
-                <ListItemButton>
-                    <ListItemIcon>{icon}</ListItemIcon>
-                    <ListItemText primary={itemName} />
-                </ListItemButton>
-            </ListItem>
-        );
+    const active = {
+        color: theme.palette.primary.main,
+        textDecoration: "none"
     };
 
+    const inactive = {
+        color: theme.palette.secondary.dark,
+        textDecoration: "none"
+    };
+
+    const buildListItem = (itemName, icon, route) => {
+        return (
+            <NavLink end to={route} style={({ isActive }) => (isActive ? active : inactive)}>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>{icon}</ListItemIcon>
+                        <ListItemText primary={itemName} />
+                    </ListItemButton>
+                </ListItem>
+            </NavLink>
+        );
+    };
     return (
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
@@ -83,15 +97,21 @@ export function Dashboard() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {buildListItem("Home", <HomeIcon />)}
+                    {buildListItem("Home", <HomeIcon />, "/")}
                     <Divider />
-                    {buildListItem("Products", <RestaurantIcon />)}
-                    {buildListItem("Orders", <FormatListNumberedSharpIcon />)}
+                    {buildListItem("Products", <RestaurantIcon />, "/products")}
+                    {buildListItem("Orders", <FormatListNumberedSharpIcon />, "/orders")}
                 </List>
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                <ProductsList />
+                <div style={{ height: "80vh", width: "100%", display: "flex", justifyContent: "center" }}>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/products" element={<ProductsList />} />
+                        <Route path="/orders" element={<Orders />} />
+                    </Routes>
+                </div>
             </Main>
         </Box>
     );
