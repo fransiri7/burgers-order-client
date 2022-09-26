@@ -7,11 +7,10 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import FormatListNumberedSharpIcon from "@mui/icons-material/FormatListNumberedSharp";
 import HomeIcon from "@mui/icons-material/Home";
 import Navbar from "./Navbar";
-import { ProductsList } from "../../modules/product/ProductsList";
+import { ProductsList, CreateProduct } from "../../modules/product/";
 import { Orders } from "../../modules/order/Orders";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { Home } from "../../modules/home/Home";
-import { CreateProduct } from "../../modules/product/CreateProduct";
 
 const drawerWidth = 190;
 
