@@ -11,6 +11,7 @@ import { ProductsList } from "../../modules/product/ProductsList";
 import { Orders } from "../../modules/order/Orders";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { Home } from "../../modules/home/Home";
+import { CreateProduct } from "../../modules/product/CreateProduct";
 
 const drawerWidth = 190;
 
@@ -110,6 +111,7 @@ export function Dashboard() {
                         <Route path="/" element={<Home />} />
                         <Route path="/products" element={<ProductsList />} />
                         <Route path="/orders" element={<Orders />} />
+                        <Route path="/createProduct" element={<CreateProduct />} />
                     </Routes>
                 </div>
             </Main>
