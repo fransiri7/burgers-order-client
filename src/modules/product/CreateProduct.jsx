@@ -3,6 +3,7 @@ import { Button, Grid, InputAdornment, Typography, TextField } from "@mui/materi
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { grey, green, red } from "@mui/material/colors";
 import { ChromePicker } from "react-color";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
     palette: {
@@ -19,7 +20,59 @@ const theme = createTheme({
 });
 
 export function CreateProduct() {
-    const [color, setColor] = useState("ff0000");
+    const validate = form => {
+        const errors = {};
+        if (!form.name) {
+            errors.name = "Name is required";
+        }
+        if (!form.price) {
+            errors.price = "Price is required";
+        } else if (form.price < 0) {
+            errors.price = "Price must be a number greater than 0";
+        }
+        return errors;
+    };
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        name: "",
+        description: "",
+        price: "",
+        hexColor: "ff0000"
+    });
+    const [errors, setErrors] = useState({});
+    const [formSubmitted, setFormSubmitted] = useState(false);
+
+    const handleChange = event => {
+        event.preventDefault();
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value
+        });
+        if (formSubmitted) {
+            setErrors(
+                validate({
+                    ...formData,
+                    [event.target.name]: event.target.value
+                })
+            );
+        }
+    };
+
+    const handleSubmit = () => {
+        setFormSubmitted(true);
+        const formValidation = validate(formData);
+        setErrors(formValidation);
+        if (Object.keys(formValidation).length === 0) {
+            console.log({ formData });
+            console.log("vamos a submitear el nuevo producto");
+            setFormData({
+                name: "",
+                description: "",
+                price: "",
+                hexColor: "ff0000"
+            });
+        }
+    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -43,7 +96,19 @@ export function CreateProduct() {
                             }}
                         >
                             <Grid item md={12}>
-                                <TextField id="name" name="name" type="text" label="Name" multiline rows={1} fullWidth />
+                                <TextField
+                                    error={!!errors.name}
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    label="Name"
+                                    multiline
+                                    rows={1}
+                                    fullWidth
+                                    onChange={handleChange}
+                                    value={formData.name}
+                                    helperText={errors.name}
+                                />
                             </Grid>
                         </Grid>
                         <Grid
@@ -64,6 +129,8 @@ export function CreateProduct() {
                                     multiline
                                     rows={3}
                                     fullWidth
+                                    onChange={handleChange}
+                                    value={formData.description}
                                 />
                             </Grid>
                         </Grid>
@@ -78,6 +145,7 @@ export function CreateProduct() {
                         >
                             <Grid item md={4}>
                                 <TextField
+                                    error={!!errors.price}
                                     id="price"
                                     name="price"
                                     type="number"
@@ -87,6 +155,9 @@ export function CreateProduct() {
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">$</InputAdornment>
                                     }}
+                                    onChange={handleChange}
+                                    value={formData.price}
+                                    helperText={errors.price}
                                 />
                             </Grid>
                         </Grid>
@@ -94,9 +165,9 @@ export function CreateProduct() {
                     <Grid item container justifyContent="center" alignItems="center" style={{ height: "100%" }} md={5}>
                         <Grid item>
                             <ChromePicker
-                                color={color}
+                                color={formData.hexColor}
                                 onChangeComplete={color => {
-                                    setColor(color.hex);
+                                    setFormData({ ...formData, hexColor: color.hex });
                                 }}
                             />
                         </Grid>
@@ -105,12 +176,19 @@ export function CreateProduct() {
                 <Grid item container direction="row" justifyContent="center" alignContent="center" style={{ height: "10%" }}>
                     <Grid item container justifyContent="space-around" alignItems="center" md={4} style={{ height: "100%" }}>
                         <Grid item>
-                            <Button variant="contained" color="secondary" style={{ color: "white" }}>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                style={{ color: "white" }}
+                                onClick={() => {
+                                    navigate(-1);
+                                }}
+                            >
                                 Back
                             </Button>
                         </Grid>
                         <Grid item>
-                            <Button variant="contained" color="tertiary" style={{ color: "white" }}>
+                            <Button variant="contained" color="tertiary" style={{ color: "white" }} onClick={handleSubmit}>
                                 Create
                             </Button>
                         </Grid>
