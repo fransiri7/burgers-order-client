@@ -1,7 +1,8 @@
 import { React, useState } from "react";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, Typography, TextField } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { grey } from "@mui/material/colors";
+import { grey, green, red } from "@mui/material/colors";
+import { ChromePicker } from "react-color";
 
 const theme = createTheme({
     palette: {
@@ -9,109 +10,126 @@ const theme = createTheme({
             main: grey[700]
         },
         secondary: {
-            light: grey[500],
-            main: grey[500],
-            dark: grey[900]
+            main: red[500]
+        },
+        tertiary: {
+            main: green[500]
         }
     }
 });
 
 export function CreateProduct() {
-    const [input, setInput] = useState({
-        name: "",
-        description: "",
-        price: "",
-        hexColor: ""
-    });
+    const [color, setColor] = useState("ff0000");
+    const [input, setInput] = useState("");
 
     const handleChange = event => {
-        event.preventDefault();
-        setInput({ ...input, [event.target.name]: event.target.value });
+        setInput(event.target.value);
     };
     return (
         <ThemeProvider theme={theme}>
-            <Grid container direction="column" alignItems="center" style={{ height: "80vh" }}>
-                <Grid item container justifyContent="flex-start" alignItems="center" style={{ height: "5%" }}>
+            <Grid container direction="column" alignItems="center" style={{ height: "80vh", width: "80%" }}>
+                <Grid item container justifyContent="flex-start" alignItems="center" style={{ height: "10%" }}>
                     <Grid item>
-                        <Typography variant="body2">Create Product</Typography>
+                        <Typography variant="h5" style={{ fontWeight: "bold" }}>
+                            Create Product
+                        </Typography>
                     </Grid>
                 </Grid>
-                <Grid
-                    item
-                    container
-                    alignItems="center"
-                    style={{
-                        // backgroundColor: "green",
-                        height: "15%",
-                        width: "100%"
-                    }}
-                >
-                    <Grid item>
-                        <TextField
-                            id="name"
-                            name="name"
-                            type="text"
-                            label="Name"
-                            multiline
-                            value={input.name}
-                            onChange={handleChange}
-                            style={{ width: "100%" }}
-                        />
-                    </Grid>
-                </Grid>
-                <Grid
-                    item
-                    container
-                    alignItems="center"
-                    style={{
-                        // backgroundColor: "yellow",
-                        height: "25%",
-                        width: "100%"
-                    }}
-                >
-                    <Grid item>
-                        <TextField
-                            id="description"
-                            name="description"
-                            type="text"
-                            label="Description"
-                            multiline
-                            rows={3}
-                            value={input.description}
-                            onChange={handleChange}
-                        />
-                    </Grid>
-                </Grid>
-                <Grid item container direction="row" justifyContent="space-between" style={{ height: "45%" }}>
-                    <Grid item container alignItems="center" md={4} style={{ marginTop: "20px" }}>
-                        <Grid item>
-                            <TextField
-                                id="price"
-                                name="price"
-                                type="number"
-                                min="0"
-                                label="Price"
-                                value={input.price}
-                                onChange={handleChange}
-                            />
+                <Grid item container style={{ height: "80%" }}>
+                    <Grid item container justifyContent="center" direction="column" md={7}>
+                        <Grid
+                            item
+                            container
+                            alignItems="center"
+                            style={{
+                                height: "15%",
+                                width: "100%"
+                            }}
+                        >
+                            <Grid item md={12}>
+                                <TextField
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    label="Name"
+                                    multiline
+                                    value={input}
+                                    onChange={handleChange}
+                                    fullWidth
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            item
+                            container
+                            alignItems="center"
+                            style={{
+                                height: "50%",
+                                width: "100%"
+                            }}
+                        >
+                            <Grid item md={12}>
+                                <TextField
+                                    id="description"
+                                    name="description"
+                                    type="text"
+                                    label="Description"
+                                    multiline
+                                    rows={3}
+                                    value={input}
+                                    onChange={handleChange}
+                                    fullWidth
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            item
+                            container
+                            alignItems="center"
+                            style={{
+                                height: "15%",
+                                width: "100%"
+                            }}
+                        >
+                            <Grid item md={12}>
+                                <TextField
+                                    id="price"
+                                    name="price"
+                                    type="number"
+                                    min="0"
+                                    label="Price"
+                                    value={input}
+                                    onChange={handleChange}
+                                    fullWidth
+                                />
+                            </Grid>
                         </Grid>
                     </Grid>
-                    <Grid
-                        item
-                        md={4}
-                        //  style={{ backgroundColor: "grey" }}
-                    >
-                        <h1>tableta de colores</h1>
+                    <Grid item md={5}>
+                        <Grid item container justifyContent="center" alignItems="center" style={{ height: "100%" }}>
+                            <Grid item>
+                                <ChromePicker
+                                    color={color}
+                                    onChangeComplete={color => {
+                                        setColor(color.hex);
+                                    }}
+                                />
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
 
                 <Grid item container direction="row" justifyContent="center" alignContent="center" style={{ height: "10%" }}>
-                    <Grid item container justifyContent="space-around" alignItems="center" md={3} style={{ height: "100%" }}>
+                    <Grid item container justifyContent="space-around" alignItems="center" md={4} style={{ height: "100%" }}>
                         <Grid item>
-                            <Button variant="outlined">Back</Button>
+                            <Button variant="contained" color="secondary" style={{ color: "white" }}>
+                                Back
+                            </Button>
                         </Grid>
                         <Grid item>
-                            <Button variant="outlined">Create</Button>
+                            <Button variant="contained" color="tertiary" style={{ color: "white" }}>
+                                Create
+                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>
