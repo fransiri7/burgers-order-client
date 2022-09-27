@@ -110,7 +110,7 @@ export function Dashboard() {
                         <Route path="/" element={<Home />} />
                         <Route path="/products" element={<ProductsList />} />
                         <Route path="/orders" element={<Orders />} />
-                        <Route path="/createProduct" element={<CreateProduct />} />
+                        <Route path="/products/create" element={<CreateProduct />} />
                     </Routes>
                 </div>
             </Main>

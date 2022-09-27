@@ -20,17 +20,13 @@ const theme = createTheme({
 
 export function CreateProduct() {
     const [color, setColor] = useState("ff0000");
-    const [input, setInput] = useState("");
 
-    const handleChange = event => {
-        setInput(event.target.value);
-    };
     return (
         <ThemeProvider theme={theme}>
-            <Grid container direction="column" alignItems="center" style={{ height: "80vh", width: "80%" }}>
+            <Grid container direction="column" alignItems="center" style={{ height: "70vh", width: "90%" }}>
                 <Grid item container justifyContent="flex-start" alignItems="center" style={{ height: "10%" }}>
                     <Grid item>
-                        <Typography variant="h5" style={{ fontWeight: "bold" }}>
+                        <Typography variant="h5" fontWeight="bold">
                             Create Product
                         </Typography>
                     </Grid>
@@ -47,16 +43,7 @@ export function CreateProduct() {
                             }}
                         >
                             <Grid item md={12}>
-                                <TextField
-                                    id="name"
-                                    name="name"
-                                    type="text"
-                                    label="Name"
-                                    multiline
-                                    value={input}
-                                    onChange={handleChange}
-                                    fullWidth
-                                />
+                                <TextField id="name" name="name" type="text" label="Name" multiline fullWidth />
                             </Grid>
                         </Grid>
                         <Grid
@@ -76,8 +63,6 @@ export function CreateProduct() {
                                     label="Description"
                                     multiline
                                     rows={3}
-                                    value={input}
-                                    onChange={handleChange}
                                     fullWidth
                                 />
                             </Grid>
@@ -92,33 +77,21 @@ export function CreateProduct() {
                             }}
                         >
                             <Grid item md={12}>
-                                <TextField
-                                    id="price"
-                                    name="price"
-                                    type="number"
-                                    min="0"
-                                    label="Price"
-                                    value={input}
-                                    onChange={handleChange}
-                                    fullWidth
-                                />
+                                <TextField id="price" name="price" type="number" min="0" label="Price" fullWidth />
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item md={5}>
-                        <Grid item container justifyContent="center" alignItems="center" style={{ height: "100%" }}>
-                            <Grid item>
-                                <ChromePicker
-                                    color={color}
-                                    onChangeComplete={color => {
-                                        setColor(color.hex);
-                                    }}
-                                />
-                            </Grid>
+                    <Grid item container justifyContent="center" alignItems="center" style={{ height: "100%" }} md={5}>
+                        <Grid item>
+                            <ChromePicker
+                                color={color}
+                                onChangeComplete={color => {
+                                    setColor(color.hex);
+                                }}
+                            />
                         </Grid>
                     </Grid>
                 </Grid>
-
                 <Grid item container direction="row" justifyContent="center" alignContent="center" style={{ height: "10%" }}>
                     <Grid item container justifyContent="space-around" alignItems="center" md={4} style={{ height: "100%" }}>
                         <Grid item>
