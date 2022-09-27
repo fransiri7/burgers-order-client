@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Button, Grid, Typography, TextField } from "@mui/material";
+import { Button, Grid, InputAdornment, Typography, TextField } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { grey, green, red } from "@mui/material/colors";
 import { ChromePicker } from "react-color";
@@ -43,7 +43,7 @@ export function CreateProduct() {
                             }}
                         >
                             <Grid item md={12}>
-                                <TextField id="name" name="name" type="text" label="Name" multiline fullWidth />
+                                <TextField id="name" name="name" type="text" label="Name" multiline rows={1} fullWidth />
                             </Grid>
                         </Grid>
                         <Grid
@@ -76,8 +76,18 @@ export function CreateProduct() {
                                 width: "100%"
                             }}
                         >
-                            <Grid item md={12}>
-                                <TextField id="price" name="price" type="number" min="0" label="Price" fullWidth />
+                            <Grid item md={4}>
+                                <TextField
+                                    id="price"
+                                    name="price"
+                                    type="number"
+                                    min="0"
+                                    label="Price"
+                                    fullWidth
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">$</InputAdornment>
+                                    }}
+                                />
                             </Grid>
                         </Grid>
                     </Grid>
