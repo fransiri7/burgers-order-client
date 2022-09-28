@@ -1,27 +1,26 @@
-/* eslint-disable */
-
 import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
 import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 
-const products = [];
-
 export function ProductsList() {
+
+    const products = [];
+
     return (
-        <Grid container direction="column" style={{ height: "80vh" }}>
-            <Grid item container justifyContent="space-between" alignItems="center" style={{ height: "15%" }}>
+        <Grid container direction="column" justifyContent="space-between" style={{ height: "80vh" }}>
+            <Grid item container justifyContent="space-between" alignItems="center" style={{ height: "10%" }}>
                 <Grid item md={3}>
                     <TextField label="Filter Product" variant="outlined" fullWidth />
                 </Grid>
                 <Grid item md={2}>
-                    <Button variant="contained" style={{ width: "90%" }}>
+                    <Button variant="outlined" style={{ width: "90%" }}>
                         Add Product
                     </Button>
                 </Grid>
             </Grid>
-            <Grid item container style={{ height: "85%" }}>
+            <Grid item style={{ height: "85%" }}>
                 <TableContainer component={Paper} style={{ maxHeight: "100%" }}>
                     <Table stickyHeader>
                         <TableHead>
