@@ -3,10 +3,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
 import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export function ProductsList() {
-
     const products = [];
+    const navigate = useNavigate();
 
     return (
         <Grid container direction="column" justifyContent="space-between" style={{ height: "80vh" }}>
@@ -15,7 +16,13 @@ export function ProductsList() {
                     <TextField label="Filter Product" variant="outlined" fullWidth />
                 </Grid>
                 <Grid item md={2}>
-                    <Button variant="outlined" style={{ width: "90%" }}>
+                    <Button
+                        variant="outlined"
+                        style={{ width: "90%" }}
+                        onClick={() => {
+                            navigate("/products/create");
+                        }}
+                    >
                         Add Product
                     </Button>
                 </Grid>
