@@ -5,6 +5,7 @@ import { grey, green, red } from "@mui/material/colors";
 import { ChromePicker } from "react-color";
 import { useNavigate } from "react-router-dom";
 import { create } from "./utils/service";
+import swAlert from "sweetalert2";
 
 const theme = createTheme({
     palette: {
@@ -73,10 +74,25 @@ export function CreateProduct() {
                         price: "",
                         hexColor: "ff0000"
                     });
-                    alert(functionResponse.msg);
-                    navigate("/");
+                    swAlert
+                        .fire({
+                            title: "SUCCES!",
+                            text: functionResponse.msg,
+                            icon: "success",
+                            confirmButtonColor: `${green[500]}`
+                        })
+                        .then(result => {
+                            if (result.isConfirmed) {
+                                navigate("/");
+                            }
+                        });
                 } else {
-                    alert(functionResponse.msg);
+                    swAlert.fire({
+                        title: "ERROR!",
+                        text: functionResponse.msg,
+                        icon: "error",
+                        confirmButtonColor: `${red[500]}`
+                    });
                 }
             } catch (error) {
                 alert(error);
