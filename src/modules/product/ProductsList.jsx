@@ -1,47 +1,29 @@
+/* eslint-disable */
+
 import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
 import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 
-const products = [
-    {
-        name: "BlueCheese",
-        description: "pan,cebolla,roquefort,medallon,mozza,pan",
-        price: 850,
-        hexColor: "0000FF",
-        status: true
-    },
-    {
-        name: "Capresse",
-        description: "pan,tomate,albahaca,medallon,mozza,pan",
-        price: 850,
-        hexColor: "ff0000",
-        status: true
-    },
-    {
-        name: "Veggie",
-        description: "pan,tomate,albahaca,medallon de lenteja,mozza,pan",
-        price: 850,
-        hexColor: "#F29A86",
-        status: true
-    }
-];
+const products = [];
 
 export function ProductsList() {
     return (
-        <Grid container>
-            <Grid item container justifyContent="space-between" alignItems="stretch" style={{ height: "10%" }}>
-                <Grid item>
-                    <TextField label="Filter Product" variant="outlined" fullWidth style={{ backgroundColor: "white" }} />
+        <Grid container direction="column" style={{ height: "80vh" }}>
+            <Grid item container justifyContent="space-between" alignItems="center" style={{ height: "15%" }}>
+                <Grid item md={3}>
+                    <TextField label="Filter Product" variant="outlined" fullWidth />
                 </Grid>
-                <Grid item>
-                    <Button variant="contained">Add Product</Button>
+                <Grid item md={2}>
+                    <Button variant="contained" style={{ width: "90%" }}>
+                        Add Product
+                    </Button>
                 </Grid>
             </Grid>
-            <Grid item container style={{ height: "90%" }}>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Grid item container style={{ height: "85%" }}>
+                <TableContainer component={Paper} style={{ maxHeight: "100%" }}>
+                    <Table stickyHeader>
                         <TableHead>
                             <TableRow>
                                 <TableCell width="10%" align="center"></TableCell>
@@ -56,15 +38,15 @@ export function ProductsList() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {products.map(row => (
-                                <TableRow key={row.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                            {products.map(product => (
+                                <TableRow key={product.name}>
                                     <TableCell align="center">
-                                        <LunchDiningTwoToneIcon fontSize="large" style={{ color: row.hexColor }} />
+                                        <LunchDiningTwoToneIcon fontSize="large" style={{ color: product.hexColor }} />
                                     </TableCell>
                                     <TableCell component="th" scope="row">
-                                        {row.name}
+                                        {product.name}
                                     </TableCell>
-                                    <TableCell>${row.price}</TableCell>
+                                    <TableCell>${product.price}</TableCell>
                                     <TableCell align="center">
                                         <Switch />
                                     </TableCell>
