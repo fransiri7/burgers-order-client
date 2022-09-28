@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { grey, green, red } from "@mui/material/colors";
 import { ChromePicker } from "react-color";
 import { useNavigate } from "react-router-dom";
+import { create } from "./utils/service";
 
 const theme = createTheme({
     palette: {
@@ -58,19 +59,28 @@ export function CreateProduct() {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setFormSubmitted(true);
         const formValidation = validate(formData);
         setErrors(formValidation);
         if (Object.keys(formValidation).length === 0) {
-            console.log({ formData });
-            console.log("vamos a submitear el nuevo producto");
-            setFormData({
-                name: "",
-                description: "",
-                price: "",
-                hexColor: "ff0000"
-            });
+            try {
+                const functionResponse = await create(formData);
+                if (functionResponse.success) {
+                    setFormData({
+                        name: "",
+                        description: "",
+                        price: "",
+                        hexColor: "ff0000"
+                    });
+                    alert(functionResponse.msg);
+                    navigate("/");
+                } else {
+                    alert(functionResponse.msg);
+                }
+            } catch (error) {
+                alert(error);
+            }
         }
     };
 
