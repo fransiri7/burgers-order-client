@@ -66,36 +66,32 @@ export function CreateProduct() {
         setErrors(formValidation);
         if (Object.keys(formValidation).length === 0) {
             try {
-                const functionResponse = await create(formData);
-                if (functionResponse.success) {
-                    setFormData({
-                        name: "",
-                        description: "",
-                        price: "",
-                        hexColor: "ff0000"
+                const msg = await create(formData);
+                setFormData({
+                    name: "",
+                    description: "",
+                    price: "",
+                    hexColor: "ff0000"
+                });
+                swAlert
+                    .fire({
+                        title: "SUCCES!",
+                        text: msg,
+                        icon: "success",
+                        confirmButtonColor: `${green[500]}`
+                    })
+                    .then(result => {
+                        if (result.isConfirmed) {
+                            navigate("/");
+                        }
                     });
-                    swAlert
-                        .fire({
-                            title: "SUCCES!",
-                            text: functionResponse.msg,
-                            icon: "success",
-                            confirmButtonColor: `${green[500]}`
-                        })
-                        .then(result => {
-                            if (result.isConfirmed) {
-                                navigate("/");
-                            }
-                        });
-                } else {
-                    swAlert.fire({
-                        title: "ERROR!",
-                        text: functionResponse.msg,
-                        icon: "error",
-                        confirmButtonColor: `${red[500]}`
-                    });
-                }
             } catch (error) {
-                alert(error);
+                swAlert.fire({
+                    title: "ERROR!",
+                    text: error.message,
+                    icon: "error",
+                    confirmButtonColor: `${red[500]}`
+                });
             }
         }
     };

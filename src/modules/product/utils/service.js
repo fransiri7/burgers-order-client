@@ -7,10 +7,10 @@ const URLS = {
 };
 
 export const create = async product => {
-    try {
-        const response = await axios.post(URLS.CREATE_PRODUCT, product);
-        return response.data;
-    } catch (error) {
-        throw new Error(error.response.data.msg);
+    const response = await axios.post(URLS.CREATE_PRODUCT, product);
+    if (response.data.success) {
+        return response.data.msg;
+    } else {
+        throw new Error(response.data.msg);
     }
 };
