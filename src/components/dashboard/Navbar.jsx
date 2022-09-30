@@ -5,6 +5,7 @@ import { IconButton, Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import { PropTypes } from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 190;
 const AppBar = styled(MuiAppBar, {
@@ -25,6 +26,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function Navbar({ handleDrawerOpen, open }) {
+    const navigate = useNavigate();
     return (
         <AppBar position="fixed" open={open}>
             <Toolbar>
@@ -38,7 +40,15 @@ export default function Navbar({ handleDrawerOpen, open }) {
                     <MenuIcon />
                 </IconButton>
 
-                <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    sx={{ mr: 2 }}
+                    onClick={() => {
+                        navigate("/");
+                    }}
+                >
                     <LunchDiningIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap component="div">
