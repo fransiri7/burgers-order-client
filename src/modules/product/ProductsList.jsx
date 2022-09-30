@@ -3,12 +3,25 @@ import EditIcon from "@mui/icons-material/Edit";
 import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
 import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import LinearProgress from "@mui/material/LinearProgress";
 import { useNavigate } from "react-router-dom";
+import { getAllProducts } from "./utils/apiHooks";
+import useIsMountedRef from "../../hooks/useIsMountedRef";
 
 export function ProductsList() {
-    const products = [];
+    const isMountedRef = useIsMountedRef();
+    const [products, getProductsCompleted] = getAllProducts(isMountedRef);
+
     const navigate = useNavigate();
 
+    if (!getProductsCompleted) {
+        return (
+            <Stack sx={{ width: "100%", color: "grey.500" }} spacing={2}>
+                <LinearProgress color="success" />
+            </Stack>
+        );
+    }
     return (
         <Grid container direction="column" justifyContent="space-between" style={{ height: "80vh" }}>
             <Grid item container justifyContent="space-between" alignItems="center" style={{ height: "10%" }}>
