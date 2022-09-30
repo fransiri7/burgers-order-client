@@ -22,6 +22,13 @@ const theme = createTheme({
 });
 
 export function CreateProduct() {
+    const formatName = name =>
+        name
+            .trim()
+            .split(" ")
+            .map(character => character[0].toUpperCase() + character.slice(1))
+            .join(" ");
+
     const validate = form => {
         const errors = {};
         if (!form.name) {
@@ -46,6 +53,7 @@ export function CreateProduct() {
 
     const handleChange = event => {
         event.preventDefault();
+
         setFormData({
             ...formData,
             [event.target.name]: event.target.value
@@ -66,7 +74,11 @@ export function CreateProduct() {
         setErrors(formValidation);
         if (Object.keys(formValidation).length === 0) {
             try {
-                const msg = await create(formData);
+                const body = {
+                    ...formData,
+                    name: formatName(formData.name)
+                };
+                const msg = await create(body);
                 setFormData({
                     name: "",
                     description: "",
