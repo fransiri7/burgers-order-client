@@ -6,19 +6,19 @@ import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContaine
 import Stack from "@mui/material/Stack";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useNavigate } from "react-router-dom";
-import { getAllProducts } from "./utils/apiHooks";
+import { useAllProducts } from "./utils/apiHooks";
 import useIsMountedRef from "../../hooks/useIsMountedRef";
 
 export function ProductsList() {
     const isMountedRef = useIsMountedRef();
-    const [products, getProductsCompleted] = getAllProducts(isMountedRef);
+    const [products, getProductsCompleted] = useAllProducts(isMountedRef);
 
     const navigate = useNavigate();
 
     if (!getProductsCompleted) {
         return (
-            <Stack sx={{ width: "100%", color: "grey.500" }} spacing={2}>
-                <LinearProgress color="success" />
+            <Stack sx={{ width: "80%" }} spacing={2}>
+                <LinearProgress style={{ marginTop: "200px", color: "inherit" }} />
             </Stack>
         );
     }

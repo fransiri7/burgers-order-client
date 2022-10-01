@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import * as service from "./service";
 
-export const getAllProducts = isMountedRef => {
+export const useAllProducts = isMountedRef => {
     const [products, setProducts] = useState([]);
     const [completed, setCompleted] = useState(false);
 
-    const getAllProducts = useCallback(async () => {
+    const useAllProducts = useCallback(async () => {
         try {
             const products = await service.getProducts();
             if (isMountedRef.current) {
@@ -19,8 +19,8 @@ export const getAllProducts = isMountedRef => {
     }, [isMountedRef]);
 
     useEffect(() => {
-        getAllProducts();
-    }, [getAllProducts]);
+        useAllProducts();
+    }, [useAllProducts]);
 
     return [products, completed];
 };
