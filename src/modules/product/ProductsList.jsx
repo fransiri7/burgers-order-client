@@ -7,12 +7,9 @@ import Stack from "@mui/material/Stack";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
-import useIsMountedRef from "../../hooks/useIsMountedRef";
 
 export function ProductsList() {
-    const isMountedRef = useIsMountedRef();
-    const [products, getProductsCompleted] = useAllProducts(isMountedRef);
-
+    const [products, getProductsCompleted] = useAllProducts();
     const navigate = useNavigate();
 
     if (!getProductsCompleted) {
