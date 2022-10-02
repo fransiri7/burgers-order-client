@@ -5,7 +5,7 @@ export const useAllProducts = () => {
     const [products, setProducts] = useState([]);
     const [completed, setCompleted] = useState(false);
 
-    const useAllProducts = useCallback(async () => {
+    const getAllProducts = useCallback(async () => {
         try {
             const products = await service.getProducts();
             setProducts(products);
@@ -17,8 +17,8 @@ export const useAllProducts = () => {
     }, []);
 
     useEffect(() => {
-        useAllProducts();
-    }, [useAllProducts]);
+        getAllProducts();
+    }, [getAllProducts]);
 
     return [products, completed];
 };

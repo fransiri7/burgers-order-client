@@ -2,9 +2,21 @@ import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
-import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
-import Stack from "@mui/material/Stack";
-import LinearProgress from "@mui/material/LinearProgress";
+import {
+    Button,
+    Grid,
+    Paper,
+    Switch,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TextField,
+    Stack,
+    LinearProgress
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
 
