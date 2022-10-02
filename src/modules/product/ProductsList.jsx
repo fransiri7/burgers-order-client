@@ -19,7 +19,6 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
-import { ModalProductDetail } from "./ModalProductDetail";
 
 export function ProductsList() {
     const [products, getProductsCompleted] = useAllProducts();
