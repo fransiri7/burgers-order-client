@@ -4,6 +4,8 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { grey, green, red } from "@mui/material/colors";
 import { ChromePicker } from "react-color";
 import { useNavigate } from "react-router-dom";
+import { create } from "./utils/service";
+import swAlert from "sweetalert2";
 
 const theme = createTheme({
     palette: {
@@ -20,6 +22,13 @@ const theme = createTheme({
 });
 
 export function CreateProduct() {
+    const formatName = name =>
+        name
+            .trim()
+            .split(" ")
+            .map(character => character[0].toUpperCase() + character.slice(1))
+            .join(" ");
+
     const validate = form => {
         const errors = {};
         if (!form.name) {
@@ -44,6 +53,7 @@ export function CreateProduct() {
 
     const handleChange = event => {
         event.preventDefault();
+
         setFormData({
             ...formData,
             [event.target.name]: event.target.value
@@ -58,19 +68,43 @@ export function CreateProduct() {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setFormSubmitted(true);
         const formValidation = validate(formData);
         setErrors(formValidation);
         if (Object.keys(formValidation).length === 0) {
-            console.log({ formData });
-            console.log("vamos a submitear el nuevo producto");
-            setFormData({
-                name: "",
-                description: "",
-                price: "",
-                hexColor: "ff0000"
-            });
+            try {
+                const body = {
+                    ...formData,
+                    name: formatName(formData.name)
+                };
+                const msg = await create(body);
+                setFormData({
+                    name: "",
+                    description: "",
+                    price: "",
+                    hexColor: "ff0000"
+                });
+                swAlert
+                    .fire({
+                        title: "SUCCES!",
+                        text: msg,
+                        icon: "success",
+                        confirmButtonColor: `${green[500]}`
+                    })
+                    .then(result => {
+                        if (result.isConfirmed) {
+                            navigate("/");
+                        }
+                    });
+            } catch (error) {
+                swAlert.fire({
+                    title: "ERROR!",
+                    text: error.message,
+                    icon: "error",
+                    confirmButtonColor: `${red[500]}`
+                });
+            }
         }
     };
 

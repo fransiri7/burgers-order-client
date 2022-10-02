@@ -37,7 +37,7 @@ export function ProductsList() {
                 <Grid item md={3}>
                     <TextField label="Filter Product" variant="outlined" fullWidth />
                 </Grid>
-                <Grid item md={2}>
+                <Grid item md={3}>
                     <Button
                         variant="outlined"
                         style={{ width: "90%" }}
