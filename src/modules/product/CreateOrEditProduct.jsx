@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Button, Grid, InputAdornment, LinearProgress, Stack, Typography, TextField } from "@mui/material";
+import { Button, Grid, InputAdornment, Typography, TextField } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { grey, green, red } from "@mui/material/colors";
 import { ChromePicker } from "react-color";
@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { create, editProduct } from "./utils/service";
 import swAlert from "sweetalert2";
 import { useProductById } from "./utils/apiHooks";
+import { Loading } from "../../components/Loading";
 
 const theme = createTheme({
     palette: {
@@ -23,6 +24,19 @@ const theme = createTheme({
 });
 
 export function CreateOrEditProduct() {
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const [product, getProductCompleted] = useProductById(id);
+
+    const [formData, setFormData] = useState({
+        name: "",
+        description: "",
+        price: "",
+        hexColor: "ff0000"
+    });
+    const [errors, setErrors] = useState({});
+    const [formSubmitted, setFormSubmitted] = useState(false);
+
     const formatName = name =>
         name
             .trim()
@@ -42,24 +56,6 @@ export function CreateOrEditProduct() {
         }
         return errors;
     };
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        name: "",
-        description: "",
-        price: "",
-        hexColor: "ff0000"
-    });
-    const [errors, setErrors] = useState({});
-    const [formSubmitted, setFormSubmitted] = useState(false);
-
-    const { id } = useParams();
-    const [product, getProductCompleted] = useProductById(id);
-
-    useEffect(() => {
-        if (product) {
-            setFormData(product);
-        }
-    }, [product]);
 
     const handleChange = event => {
         event.preventDefault();
@@ -108,7 +104,7 @@ export function CreateOrEditProduct() {
                     })
                     .then(result => {
                         if (result.isConfirmed) {
-                            navigate("/");
+                            navigate("/products");
                         }
                     });
             } catch (error) {
@@ -122,12 +118,14 @@ export function CreateOrEditProduct() {
         }
     };
 
+    useEffect(() => {
+        if (product) {
+            setFormData(product);
+        }
+    }, [product]);
+
     if (!getProductCompleted) {
-        return (
-            <Stack sx={{ width: "80%" }} spacing={2}>
-                <LinearProgress style={{ marginTop: "200px", color: "inherit" }} />
-            </Stack>
-        );
+        return <Loading />;
     }
 
     return (
@@ -244,15 +242,9 @@ export function CreateOrEditProduct() {
                             </Button>
                         </Grid>
                         <Grid item>
-                            {product ? (
-                                <Button variant="contained" color="tertiary" style={{ color: "white" }} onClick={handleSubmit}>
-                                    Edit
-                                </Button>
-                            ) : (
-                                <Button variant="contained" color="tertiary" style={{ color: "white" }} onClick={handleSubmit}>
-                                    Create
-                                </Button>
-                            )}
+                            <Button variant="contained" color="tertiary" style={{ color: "white" }} onClick={handleSubmit}>
+                                {product ? "Edit" : "Create"}
+                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>

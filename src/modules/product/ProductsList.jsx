@@ -2,34 +2,17 @@ import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
-import {
-    Button,
-    Grid,
-    Paper,
-    Switch,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    TextField,
-    Stack,
-    LinearProgress
-} from "@mui/material";
+import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
+import { Loading } from "../../components/Loading";
 
 export function ProductsList() {
     const [products, getProductsCompleted] = useAllProducts();
     const navigate = useNavigate();
 
     if (!getProductsCompleted) {
-        return (
-            <Stack sx={{ width: "80%" }} spacing={2}>
-                <LinearProgress style={{ marginTop: "200px", color: "inherit" }} />
-            </Stack>
-        );
+        return <Loading />;
     }
     return (
         <Grid container direction="column" justifyContent="space-between" style={{ height: "80vh" }}>
