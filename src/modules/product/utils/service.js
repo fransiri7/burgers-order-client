@@ -5,7 +5,13 @@ const baseURL = process.env.REACT_APP_API_URL;
 const URLS = {
     CREATE_PRODUCT: `${baseURL}/product`,
     GET_PRODUCT_BY_ID: id => `${baseURL}/product/${id}`,
-    EDIT_PRODUCT: id => `${baseURL}/product/${id}`
+    EDIT_PRODUCT: id => `${baseURL}/product/${id}`,
+    GET_PRODUCTS: `${baseURL}/product`
+};
+
+export const getProducts = async () => {
+    const response = await axios.get(URLS.GET_PRODUCTS);
+    return response.data;
 };
 
 export const create = async product => {
