@@ -1,10 +1,10 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Button, Grid, InputAdornment, LinearProgress, Stack, Typography, TextField } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { grey, green, red } from "@mui/material/colors";
 import { ChromePicker } from "react-color";
 import { useNavigate, useParams } from "react-router-dom";
-import { create } from "./utils/service";
+import { create, editProduct } from "./utils/service";
 import swAlert from "sweetalert2";
 import { useProductById } from "./utils/apiHooks";
 
@@ -54,11 +54,15 @@ export function CreateOrEditProduct() {
 
     const { id } = useParams();
     const [product, getProductCompleted] = useProductById(id);
-    console.log("soy producttttt", product);
+
+    useEffect(() => {
+        if (product) {
+            setFormData(product);
+        }
+    }, [product]);
 
     const handleChange = event => {
         event.preventDefault();
-
         setFormData({
             ...formData,
             [event.target.name]: event.target.value
@@ -83,7 +87,12 @@ export function CreateOrEditProduct() {
                     ...formData,
                     name: formatName(formData.name)
                 };
-                const msg = await create(body);
+                let msg;
+                if (!product) {
+                    msg = await create(body);
+                } else {
+                    msg = await editProduct(body, id);
+                }
                 setFormData({
                     name: "",
                     description: "",
@@ -127,7 +136,7 @@ export function CreateOrEditProduct() {
                 <Grid item container justifyContent="flex-start" alignItems="center" style={{ height: "10%" }}>
                     <Grid item>
                         <Typography variant="h5" fontWeight="bold">
-                            Create Product
+                            {product ? "Edit Product" : "Create Product"}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -235,9 +244,15 @@ export function CreateOrEditProduct() {
                             </Button>
                         </Grid>
                         <Grid item>
-                            <Button variant="contained" color="tertiary" style={{ color: "white" }} onClick={handleSubmit}>
-                                Create
-                            </Button>
+                            {product ? (
+                                <Button variant="contained" color="tertiary" style={{ color: "white" }} onClick={handleSubmit}>
+                                    Edit
+                                </Button>
+                            ) : (
+                                <Button variant="contained" color="tertiary" style={{ color: "white" }} onClick={handleSubmit}>
+                                    Create
+                                </Button>
+                            )}
                         </Grid>
                     </Grid>
                 </Grid>
