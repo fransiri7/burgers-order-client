@@ -1,4 +1,4 @@
 import { ProductsList } from "./ProductsList";
-import { CreateProduct } from "./CreateProduct";
+import { CreateOrEditProduct } from "./CreateOrEditProduct";
 
-export { ProductsList, CreateProduct };
+export { ProductsList, CreateOrEditProduct };
