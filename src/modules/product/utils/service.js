@@ -14,7 +14,7 @@ export const getProducts = async () => {
     return response.data;
 };
 
-export const create = async product => {
+export const createProduct = async product => {
     const response = await axios.post(URLS.CREATE_PRODUCT, product);
     if (response.data.success) {
         return response.data.msg;

@@ -4,10 +4,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { grey, green, red } from "@mui/material/colors";
 import { ChromePicker } from "react-color";
 import { useNavigate, useParams } from "react-router-dom";
-import { create, editProduct } from "./utils/service";
+import { createProduct, editProduct } from "./utils/service";
 import swAlert from "sweetalert2";
 import { useProductById } from "./utils/apiHooks";
-import { Loading } from "../../components/Loading";
+import { Loading } from "../../components/loading/Loading";
 
 const theme = createTheme({
     palette: {
@@ -85,7 +85,7 @@ export function CreateOrEditProduct() {
                 };
                 let msg;
                 if (!product) {
-                    msg = await create(body);
+                    msg = await createProduct(body);
                 } else {
                     msg = await editProduct(body, id);
                 }

@@ -6,7 +6,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 import FormatListNumberedSharpIcon from "@mui/icons-material/FormatListNumberedSharp";
 import HomeIcon from "@mui/icons-material/Home";
-import Navbar from "./Navbar";
+import { Navbar } from "./Navbar";
 import { ProductsList, CreateOrEditProduct } from "../../modules/product/";
 import { Orders } from "../../modules/order/Orders";
 import { Routes, Route, NavLink } from "react-router-dom";

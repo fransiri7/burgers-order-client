@@ -5,7 +5,7 @@ import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
 import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
-import { Loading } from "../../components/Loading";
+import { Loading } from "../../components/loading/Loading";
 
 export function ProductsList() {
     const [products, getProductsCompleted] = useAllProducts();
