@@ -1,11 +1,12 @@
 import { React, useState } from "react";
-import { Button, Grid, InputAdornment, Typography, TextField } from "@mui/material";
+import { Button, Grid, InputAdornment, LinearProgress, Stack, Typography, TextField } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { grey, green, red } from "@mui/material/colors";
 import { ChromePicker } from "react-color";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { create } from "./utils/service";
 import swAlert from "sweetalert2";
+import { useProductById } from "./utils/apiHooks";
 
 const theme = createTheme({
     palette: {
@@ -21,7 +22,7 @@ const theme = createTheme({
     }
 });
 
-export function CreateProduct() {
+export function CreateOrEditProduct() {
     const formatName = name =>
         name
             .trim()
@@ -50,6 +51,10 @@ export function CreateProduct() {
     });
     const [errors, setErrors] = useState({});
     const [formSubmitted, setFormSubmitted] = useState(false);
+
+    const { id } = useParams();
+    const [product, getProductCompleted] = useProductById(id);
+    console.log("soy producttttt", product);
 
     const handleChange = event => {
         event.preventDefault();
@@ -107,6 +112,14 @@ export function CreateProduct() {
             }
         }
     };
+
+    if (!getProductCompleted) {
+        return (
+            <Stack sx={{ width: "80%" }} spacing={2}>
+                <LinearProgress style={{ marginTop: "200px", color: "inherit" }} />
+            </Stack>
+        );
+    }
 
     return (
         <ThemeProvider theme={theme}>

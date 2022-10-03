@@ -3,7 +3,8 @@ import axios from "axios";
 const baseURL = process.env.REACT_APP_API_URL;
 
 const URLS = {
-    CREATE_PRODUCT: `${baseURL}/product`
+    CREATE_PRODUCT: `${baseURL}/product`,
+    GET_PRODUCT_BY_ID: id => `${baseURL}/product/${id}`
 };
 
 export const create = async product => {
@@ -13,4 +14,9 @@ export const create = async product => {
     } else {
         throw new Error(response.data.msg);
     }
+};
+
+export const getProductById = async id => {
+    const response = await axios.get(URLS.GET_PRODUCT_BY_ID(id));
+    return response.data;
 };
