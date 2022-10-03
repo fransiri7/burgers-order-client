@@ -79,7 +79,13 @@ export function ProductsList() {
                                         <Switch />
                                     </TableCell>
                                     <TableCell align="center">
-                                        <EditIcon style={{ marginRight: "15px" }} />
+                                        <EditIcon
+                                            style={{ marginRight: "15px" }}
+                                            cursor="pointer"
+                                            onClick={() => {
+                                                navigate(`/products/edit/${product.id}`);
+                                            }}
+                                        />
                                         <MenuIcon style={{ marginLeft: "15px" }} />
                                     </TableCell>
                                 </TableRow>
