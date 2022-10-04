@@ -44,7 +44,6 @@ export const editProduct = async (product, id) => {
 
 export const editStatusProduct = async id => {
     const response = await axios.put(URLS.EDIT_STATUS_PRODUCT(id));
-    console.log("soy response ", response);
     if (response.data.success) {
         return response.data.msg;
     } else {

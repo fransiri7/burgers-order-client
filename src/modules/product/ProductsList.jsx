@@ -1,4 +1,4 @@
-import { React } from "react";
+import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
@@ -7,22 +7,23 @@ import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
 import { Loading } from "../../components/loading/Loading";
 import { editStatusProduct } from "./utils/service";
-import { green, red } from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 import swAlert from "sweetalert2";
 
 export function ProductsList() {
-    const [products, getProductsCompleted] = useAllProducts();
+    const [products, setProducts, getProductsCompleted] = useAllProducts();
     const navigate = useNavigate();
 
-    const handleChange = async id => {
-        const msg = await editStatusProduct(id);
+    const handleSwitchChange = async id => {
+        await editStatusProduct(id);
         try {
-            swAlert.fire({
-                title: "SUCCES!",
-                text: msg,
-                icon: "success",
-                confirmButtonColor: `${green[500]}`
+            const newStatus = products.map(product => {
+                if (product.id === id) {
+                    product.status = product.status === true ? !product.status : true;
+                }
+                return product;
             });
+            setProducts(newStatus);
         } catch (error) {
             swAlert.fire({
                 title: "ERROR!",
@@ -81,7 +82,7 @@ export function ProductsList() {
                                     </TableCell>
                                     <TableCell>${product.price}</TableCell>
                                     <TableCell align="center">
-                                        <Switch name={product.name} checked={product.status} onChange={() => handleChange(product.id)} />
+                                        <Switch checked={product.status === true} onChange={() => handleSwitchChange(product.id)} />
                                     </TableCell>
                                     <TableCell align="center">
                                         <EditIcon
