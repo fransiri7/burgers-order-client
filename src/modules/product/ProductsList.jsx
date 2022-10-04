@@ -15,15 +15,15 @@ export function ProductsList() {
     const navigate = useNavigate();
 
     const handleSwitchChange = async id => {
-        await editStatusProduct(id);
         try {
-            const newStatus = products.map(product => {
+            await editStatusProduct(id);
+            const updatedProducts = products.map(product => {
                 if (product.id === id) {
-                    product.status = product.status === true ? !product.status : true;
+                    product.status = !product.status;
                 }
                 return product;
             });
-            setProducts(newStatus);
+            setProducts(updatedProducts);
         } catch (error) {
             swAlert.fire({
                 title: "ERROR!",
@@ -82,7 +82,7 @@ export function ProductsList() {
                                     </TableCell>
                                     <TableCell>${product.price}</TableCell>
                                     <TableCell align="center">
-                                        <Switch checked={product.status === true} onChange={() => handleSwitchChange(product.id)} />
+                                        <Switch checked={product.status} onChange={() => handleSwitchChange(product.id)} />
                                     </TableCell>
                                     <TableCell align="center">
                                         <EditIcon
