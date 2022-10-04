@@ -1,8 +1,21 @@
-import React from "react";
+import { React, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
-import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import {
+    Button,
+    Grid,
+    Paper,
+    Switch,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TextField,
+    Typography
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
 import { Loading } from "../../components/loading/Loading";
@@ -13,6 +26,32 @@ import swAlert from "sweetalert2";
 export function ProductsList() {
     const [products, setProducts, getProductsCompleted] = useAllProducts();
     const navigate = useNavigate();
+    const [searchText, setSearchText] = useState("");
+
+    const handleSearchChange = event => {
+        event.preventDefault();
+        setSearchText(event.target.value);
+    };
+
+    const filterProducts = (productsArray, searchText) => {
+        return productsArray.filter(
+            product =>
+                product.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                product.description.toLowerCase().includes(searchText.toLowerCase())
+        );
+    };
+    const getSearchWording = () => {
+        const noResults = !filterProducts(products, searchText).length;
+        return noResults ? (
+            <span>
+                No results found for <i>`{searchText}`</i>
+            </span>
+        ) : (
+            <span>
+                Are you looking for <i>`{searchText}`</i>
+            </span>
+        );
+    };
 
     const handleSwitchChange = async id => {
         try {
@@ -41,8 +80,13 @@ export function ProductsList() {
         <Grid container direction="column" justifyContent="space-between" style={{ height: "80vh" }}>
             <Grid item container justifyContent="space-between" alignItems="center" style={{ height: "10%" }}>
                 <Grid item md={3}>
-                    <TextField label="Filter Product" variant="outlined" fullWidth />
+                    <TextField label="Filter Product" variant="outlined" fullWidth value={searchText} onChange={handleSearchChange} />
                 </Grid>
+                {searchText ? (
+                    <Grid item md={5}>
+                        <Typography variant="h6">{getSearchWording()}</Typography>
+                    </Grid>
+                ) : null}
                 <Grid item md={3}>
                     <Button
                         variant="outlined"
@@ -72,7 +116,7 @@ export function ProductsList() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {products.map(product => (
+                            {filterProducts(products, searchText).map(product => (
                                 <TableRow key={product.name}>
                                     <TableCell align="center">
                                         <LunchDiningTwoToneIcon fontSize="large" style={{ color: product.hexColor }} />
