@@ -6,7 +6,8 @@ const URLS = {
     CREATE_PRODUCT: `${baseURL}/product`,
     GET_PRODUCT_BY_ID: id => `${baseURL}/product/${id}`,
     EDIT_PRODUCT: id => `${baseURL}/product/${id}`,
-    GET_PRODUCTS: `${baseURL}/product`
+    GET_PRODUCTS: `${baseURL}/product`,
+    EDIT_STATUS_PRODUCT: id => `${baseURL}/product/status/${id}`
 };
 
 export const getProducts = async () => {
@@ -34,6 +35,16 @@ export const getProductById = async id => {
 
 export const editProduct = async (product, id) => {
     const response = await axios.put(URLS.EDIT_PRODUCT(id), product);
+    if (response.data.success) {
+        return response.data.msg;
+    } else {
+        throw new Error(response.data.msg);
+    }
+};
+
+export const editStatusProduct = async id => {
+    const response = await axios.put(URLS.EDIT_STATUS_PRODUCT(id));
+    console.log("soy response ", response);
     if (response.data.success) {
         return response.data.msg;
     } else {

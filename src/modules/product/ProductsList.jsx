@@ -1,4 +1,4 @@
-import React from "react";
+import { React } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
@@ -6,10 +6,32 @@ import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContaine
 import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
 import { Loading } from "../../components/loading/Loading";
+import { editStatusProduct } from "./utils/service";
+import { green, red } from "@mui/material/colors";
+import swAlert from "sweetalert2";
 
 export function ProductsList() {
     const [products, getProductsCompleted] = useAllProducts();
     const navigate = useNavigate();
+
+    const handleChange = async id => {
+        const msg = await editStatusProduct(id);
+        try {
+            swAlert.fire({
+                title: "SUCCES!",
+                text: msg,
+                icon: "success",
+                confirmButtonColor: `${green[500]}`
+            });
+        } catch (error) {
+            swAlert.fire({
+                title: "ERROR!",
+                text: error.message,
+                icon: "error",
+                confirmButtonColor: `${red[500]}`
+            });
+        }
+    };
 
     if (!getProductsCompleted) {
         return <Loading />;
@@ -59,7 +81,7 @@ export function ProductsList() {
                                     </TableCell>
                                     <TableCell>${product.price}</TableCell>
                                     <TableCell align="center">
-                                        <Switch />
+                                        <Switch name={product.name} checked={product.status} onChange={() => handleChange(product.id)} />
                                     </TableCell>
                                     <TableCell align="center">
                                         <EditIcon
