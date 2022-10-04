@@ -6,7 +6,7 @@ import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContaine
 import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
 import { Loading } from "../../components/loading/Loading";
-import { editStatusProduct } from "./utils/service";
+import { editProductStatus } from "./utils/service";
 import { red } from "@mui/material/colors";
 import swAlert from "sweetalert2";
 
@@ -16,7 +16,7 @@ export function ProductsList() {
 
     const handleSwitchChange = async id => {
         try {
-            await editStatusProduct(id);
+            await editProductStatus(id);
             const updatedProducts = products.map(product => {
                 if (product.id === id) {
                     product.status = !product.status;

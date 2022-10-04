@@ -42,7 +42,7 @@ export const editProduct = async (product, id) => {
     }
 };
 
-export const editStatusProduct = async id => {
+export const editProductStatus = async id => {
     const response = await axios.put(URLS.EDIT_PRODUCT_STATUS(id));
     if (response.data.success) {
         return response.data.msg;
