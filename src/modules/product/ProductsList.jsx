@@ -28,13 +28,13 @@ export function ProductsList() {
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState("");
 
-    const handleSearchChange = event => {
+    const handleSearchTextChange = event => {
         event.preventDefault();
         setSearchText(event.target.value);
     };
 
-    const filterProducts = (productsArray, searchText) => {
-        return productsArray.filter(
+    const filterProducts = (productsToFilter, searchText) => {
+        return productsToFilter.filter(
             product =>
                 product.name.toLowerCase().includes(searchText.toLowerCase()) ||
                 product.description.toLowerCase().includes(searchText.toLowerCase())
@@ -48,7 +48,7 @@ export function ProductsList() {
             </span>
         ) : (
             <span>
-                Are you looking for <i>`{searchText}`</i>
+                Results for <i>`{searchText}`</i>
             </span>
         );
     };
@@ -80,7 +80,7 @@ export function ProductsList() {
         <Grid container direction="column" justifyContent="space-between" style={{ height: "80vh" }}>
             <Grid item container justifyContent="space-between" alignItems="center" style={{ height: "10%" }}>
                 <Grid item md={3}>
-                    <TextField label="Filter Product" variant="outlined" fullWidth value={searchText} onChange={handleSearchChange} />
+                    <TextField label="Filter Product" variant="outlined" fullWidth value={searchText} onChange={handleSearchTextChange} />
                 </Grid>
                 {searchText ? (
                     <Grid item md={5}>
