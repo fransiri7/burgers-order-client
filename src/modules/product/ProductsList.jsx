@@ -6,10 +6,33 @@ import { Button, Grid, Paper, Switch, Table, TableBody, TableCell, TableContaine
 import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
 import { Loading } from "../../components/loading/Loading";
+import { editProductStatus } from "./utils/service";
+import { red } from "@mui/material/colors";
+import swAlert from "sweetalert2";
 
 export function ProductsList() {
-    const [products, getProductsCompleted] = useAllProducts();
+    const [products, setProducts, getProductsCompleted] = useAllProducts();
     const navigate = useNavigate();
+
+    const handleSwitchChange = async id => {
+        try {
+            await editProductStatus(id);
+            const updatedProducts = products.map(product => {
+                if (product.id === id) {
+                    product.status = !product.status;
+                }
+                return product;
+            });
+            setProducts(updatedProducts);
+        } catch (error) {
+            swAlert.fire({
+                title: "ERROR!",
+                text: error.message,
+                icon: "error",
+                confirmButtonColor: `${red[500]}`
+            });
+        }
+    };
 
     if (!getProductsCompleted) {
         return <Loading />;
@@ -59,7 +82,7 @@ export function ProductsList() {
                                     </TableCell>
                                     <TableCell>${product.price}</TableCell>
                                     <TableCell align="center">
-                                        <Switch />
+                                        <Switch checked={product.status} onChange={() => handleSwitchChange(product.id)} />
                                     </TableCell>
                                     <TableCell align="center">
                                         <EditIcon
