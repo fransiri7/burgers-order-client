@@ -1,5 +1,5 @@
 import { ProductsList } from "./ProductsList";
-import { CreateProduct } from "./CreateProduct";
 import { ProductDetailModal } from "./ProductDetailModal";
+import { CreateOrEditProduct } from "./CreateOrEditProduct";
 
-export { ProductsList, CreateProduct, ProductDetailModal };
+export { ProductsList, ProductDetailModal, CreateOrEditProduct };

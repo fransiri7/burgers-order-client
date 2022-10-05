@@ -1,9 +1,10 @@
-import React from "react";
+import { React, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
 import {
     Button,
     Grid,
+    IconButton,
     Paper,
     Switch,
     Table,
@@ -13,31 +14,80 @@ import {
     TableHead,
     TableRow,
     TextField,
-    Stack,
-    LinearProgress,
-    IconButton
+    Typography
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
+import { Loading } from "../../components/loading/Loading";
+import { editProductStatus } from "./utils/service";
+import { red } from "@mui/material/colors";
+import swAlert from "sweetalert2";
 import { ProductDetailModal } from "./ProductDetailModal";
 
 export function ProductsList() {
-    const [products, getProductsCompleted] = useAllProducts();
+    const [products, setProducts, getProductsCompleted] = useAllProducts();
     const navigate = useNavigate();
+    const [searchText, setSearchText] = useState("");
+
+    const handleSearchTextChange = event => {
+        event.preventDefault();
+        setSearchText(event.target.value);
+    };
+
+    const filterProducts = (productsToFilter, searchText) => {
+        return productsToFilter.filter(
+            product =>
+                product.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                product.description.toLowerCase().includes(searchText.toLowerCase())
+        );
+    };
+    const getSearchWording = () => {
+        const noResults = !filterProducts(products, searchText).length;
+        return noResults ? (
+            <span>
+                No results found for <i>`{searchText}`</i>
+            </span>
+        ) : (
+            <span>
+                Results for <i>`{searchText}`</i>
+            </span>
+        );
+    };
+
+    const handleSwitchChange = async id => {
+        try {
+            await editProductStatus(id);
+            const updatedProducts = products.map(product => {
+                if (product.id === id) {
+                    product.status = !product.status;
+                }
+                return product;
+            });
+            setProducts(updatedProducts);
+        } catch (error) {
+            swAlert.fire({
+                title: "ERROR!",
+                text: error.message,
+                icon: "error",
+                confirmButtonColor: `${red[500]}`
+            });
+        }
+    };
 
     if (!getProductsCompleted) {
-        return (
-            <Stack sx={{ width: "80%" }} spacing={2}>
-                <LinearProgress style={{ marginTop: "200px", color: "inherit" }} />
-            </Stack>
-        );
+        return <Loading />;
     }
     return (
         <Grid container direction="column" justifyContent="space-between" style={{ height: "80vh" }}>
             <Grid item container justifyContent="space-between" alignItems="center" style={{ height: "10%" }}>
                 <Grid item md={3}>
-                    <TextField label="Filter Product" variant="outlined" fullWidth />
+                    <TextField label="Filter Product" variant="outlined" fullWidth value={searchText} onChange={handleSearchTextChange} />
                 </Grid>
+                {searchText ? (
+                    <Grid item md={5}>
+                        <Typography variant="h6">{getSearchWording()}</Typography>
+                    </Grid>
+                ) : null}
                 <Grid item md={3}>
                     <Button
                         variant="outlined"
@@ -67,7 +117,7 @@ export function ProductsList() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {products.map(product => (
+                            {filterProducts(products, searchText).map(product => (
                                 <TableRow key={product.name}>
                                     <TableCell align="center">
                                         <LunchDiningTwoToneIcon fontSize="large" style={{ color: product.hexColor }} />
@@ -77,13 +127,17 @@ export function ProductsList() {
                                     </TableCell>
                                     <TableCell>${product.price}</TableCell>
                                     <TableCell align="center">
-                                        <Switch />
+                                        <Switch checked={product.status} onChange={() => handleSwitchChange(product.id)} />
                                     </TableCell>
                                     <TableCell align="center">
-                                        <IconButton align="center">
-                                            <EditIcon />
+                                        <IconButton>
+                                            <EditIcon
+                                                onClick={() => {
+                                                    navigate(`/products/edit/${product.id}`);
+                                                }}
+                                            />
                                         </IconButton>
-                                        <IconButton align="center">
+                                        <IconButton>
                                             <ProductDetailModal product={product} />
                                         </IconButton>
                                     </TableCell>
