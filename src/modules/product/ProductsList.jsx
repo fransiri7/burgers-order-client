@@ -1,6 +1,5 @@
 import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
 import {
     Button,
@@ -15,10 +14,12 @@ import {
     TableRow,
     TextField,
     Stack,
-    LinearProgress
+    LinearProgress,
+    IconButton
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAllProducts } from "./utils/apiHooks";
+import { ProductDetailModal } from "./ProductDetailModal";
 
 export function ProductsList() {
     const [products, getProductsCompleted] = useAllProducts();
@@ -79,8 +80,12 @@ export function ProductsList() {
                                         <Switch />
                                     </TableCell>
                                     <TableCell align="center">
-                                        <EditIcon style={{ marginRight: "15px" }} />
-                                        <MenuIcon style={{ marginLeft: "15px" }} />
+                                        <IconButton align="center">
+                                            <EditIcon />
+                                        </IconButton>
+                                        <IconButton align="center">
+                                            <ProductDetailModal product={product} />
+                                        </IconButton>
                                     </TableCell>
                                 </TableRow>
                             ))}
