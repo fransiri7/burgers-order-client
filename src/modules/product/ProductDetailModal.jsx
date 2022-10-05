@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
+import { PropTypes } from "prop-types";
 
 export function ProductDetailModal({ product }) {
     const [open, setOpen] = useState(false);
@@ -14,7 +15,7 @@ export function ProductDetailModal({ product }) {
     };
 
     return (
-        <div>
+        <>
             <IconButton onClick={handleClickOpen}>
                 <MenuIcon />
             </IconButton>
@@ -42,6 +43,18 @@ export function ProductDetailModal({ product }) {
                     </Typography>
                 </DialogContent>
             </Dialog>
-        </div>
+        </>
     );
 }
+
+ProductDetailModal.propTypes = {
+    product: PropTypes.objectOf(
+        PropTypes.shape({
+            id: PropTypes.number,
+            name: PropTypes.string,
+            description: PropTypes.string,
+            price: PropTypes.number,
+            hexColor: PropTypes.string
+        })
+    )
+};

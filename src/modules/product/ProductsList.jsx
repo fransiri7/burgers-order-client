@@ -137,9 +137,7 @@ export function ProductsList() {
                                                 }}
                                             />
                                         </IconButton>
-                                        <IconButton>
-                                            <ProductDetailModal product={product} />
-                                        </IconButton>
+                                        <ProductDetailModal product={product} />
                                     </TableCell>
                                 </TableRow>
                             ))}
