@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { React, useState } from "react";
 import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
