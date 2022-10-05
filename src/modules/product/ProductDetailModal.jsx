@@ -20,10 +20,8 @@ export function ProductDetailModal({ product }) {
                 <MenuIcon />
             </IconButton>
             <Dialog onClose={handleClose} open={open} fullWidth style={{ textAlign: "center" }}>
-                <DialogTitle sx={{ m: 0, p: 2 }} style={{ color: product.hexColor }}>
-                    <Typography gutterBottom variant="h4" style={{ fontWeight: "bold" }}>
-                        {product.name}
-                    </Typography>
+                <DialogTitle sx={{ m: 0, p: 2 }} style={{ color: product.hexColor, fontWeight: "bold", fontSize: "35px" }}>
+                    {product.name}
                     <IconButton
                         onClick={handleClose}
                         sx={{
@@ -48,13 +46,11 @@ export function ProductDetailModal({ product }) {
 }
 
 ProductDetailModal.propTypes = {
-    product: PropTypes.objectOf(
-        PropTypes.shape({
-            id: PropTypes.number,
-            name: PropTypes.string,
-            description: PropTypes.string,
-            price: PropTypes.number,
-            hexColor: PropTypes.string
-        })
-    )
+    product: PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        description: PropTypes.string,
+        price: PropTypes.number,
+        hexColor: PropTypes.string
+    })
 };

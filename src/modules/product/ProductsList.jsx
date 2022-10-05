@@ -35,11 +35,17 @@ export function ProductsList() {
     };
 
     const filterProducts = (productsToFilter, searchText) => {
-        return productsToFilter.filter(
-            product =>
-                product.name.toLowerCase().includes(searchText.toLowerCase()) ||
-                product.description.toLowerCase().includes(searchText.toLowerCase())
-        );
+        return productsToFilter
+            .sort((a, b) => {
+                if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                else if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                else return 0;
+            })
+            .filter(
+                product =>
+                    product.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                    product.description.toLowerCase().includes(searchText.toLowerCase())
+            );
     };
     const getSearchWording = () => {
         const noResults = !filterProducts(products, searchText).length;
@@ -130,12 +136,12 @@ export function ProductsList() {
                                         <Switch checked={product.status} onChange={() => handleSwitchChange(product.id)} />
                                     </TableCell>
                                     <TableCell align="center">
-                                        <IconButton>
-                                            <EditIcon
-                                                onClick={() => {
-                                                    navigate(`/products/edit/${product.id}`);
-                                                }}
-                                            />
+                                        <IconButton
+                                            onClick={() => {
+                                                navigate(`/products/edit/${product.id}`);
+                                            }}
+                                        >
+                                            <EditIcon />
                                         </IconButton>
                                         <ProductDetailModal product={product} />
                                     </TableCell>
