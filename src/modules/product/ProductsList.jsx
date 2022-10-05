@@ -1,10 +1,10 @@
 import { React, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import MenuIcon from "@mui/icons-material/Menu";
 import LunchDiningTwoToneIcon from "@mui/icons-material/LunchDiningTwoTone";
 import {
     Button,
     Grid,
+    IconButton,
     Paper,
     Switch,
     Table,
@@ -22,6 +22,7 @@ import { Loading } from "../../components/loading/Loading";
 import { editProductStatus } from "./utils/service";
 import { red } from "@mui/material/colors";
 import swAlert from "sweetalert2";
+import { ProductDetailModal } from "./ProductDetailModal";
 
 export function ProductsList() {
     const [products, setProducts, getProductsCompleted] = useAllProducts();
@@ -129,14 +130,14 @@ export function ProductsList() {
                                         <Switch checked={product.status} onChange={() => handleSwitchChange(product.id)} />
                                     </TableCell>
                                     <TableCell align="center">
-                                        <EditIcon
-                                            style={{ marginRight: "15px" }}
-                                            cursor="pointer"
-                                            onClick={() => {
-                                                navigate(`/products/edit/${product.id}`);
-                                            }}
-                                        />
-                                        <MenuIcon style={{ marginLeft: "15px" }} />
+                                        <IconButton>
+                                            <EditIcon
+                                                onClick={() => {
+                                                    navigate(`/products/edit/${product.id}`);
+                                                }}
+                                            />
+                                        </IconButton>
+                                        <ProductDetailModal product={product} />
                                     </TableCell>
                                 </TableRow>
                             ))}

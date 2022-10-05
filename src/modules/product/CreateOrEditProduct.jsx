@@ -97,7 +97,7 @@ export function CreateOrEditProduct() {
                 });
                 swAlert
                     .fire({
-                        title: "SUCCES!",
+                        title: "SUCCESS!",
                         text: msg,
                         icon: "success",
                         confirmButtonColor: `${green[500]}`
