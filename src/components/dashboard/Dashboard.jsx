@@ -8,7 +8,7 @@ import FormatListNumberedSharpIcon from "@mui/icons-material/FormatListNumberedS
 import HomeIcon from "@mui/icons-material/Home";
 import { Navbar } from "./Navbar";
 import { ProductsList, CreateOrEditProduct } from "../../modules/product/";
-import { Orders } from "../../modules/order/Orders";
+import { OrdersList } from "../../modules/order/OrdersList";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { Home } from "../../modules/home/Home";
 
@@ -109,7 +109,7 @@ export function Dashboard() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/products" element={<ProductsList />} />
-                        <Route path="/orders" element={<Orders />} />
+                        <Route path="/orders" element={<OrdersList />} />
                         <Route path="/products/create" element={<CreateOrEditProduct />} />
                         <Route path="/products/edit/:id" element={<CreateOrEditProduct />} />
                     </Routes>
