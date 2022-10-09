@@ -26,7 +26,7 @@ export function OrdersList() {
                         productId: 1,
                         quantity: 2,
                         subtotal: 1300,
-                        notes: null
+                        notes: "una sin lechuga"
                     }
                 },
                 {
@@ -66,7 +66,7 @@ export function OrdersList() {
                         productId: 7,
                         quantity: 1,
                         subtotal: 600,
-                        notes: null
+                        notes: "podrian ponerle poquita albahaca por favor?, soy alergico"
                     }
                 },
                 {
