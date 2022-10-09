@@ -9,6 +9,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import { Navbar } from "./Navbar";
 import { ProductsList, CreateOrEditProduct } from "../../modules/product/";
 import { Orders } from "../../modules/order/Orders";
+import { CreateOrder } from "../../modules/order/CreateOrder";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { Home } from "../../modules/home/Home";
 
@@ -110,6 +111,7 @@ export function Dashboard() {
                         <Route path="/" element={<Home />} />
                         <Route path="/products" element={<ProductsList />} />
                         <Route path="/orders" element={<Orders />} />
+                        <Route path="/orders/create" element={<CreateOrder />} />
                         <Route path="/products/create" element={<CreateOrEditProduct />} />
                         <Route path="/products/edit/:id" element={<CreateOrEditProduct />} />
                     </Routes>
