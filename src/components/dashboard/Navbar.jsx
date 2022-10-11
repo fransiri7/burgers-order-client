@@ -60,6 +60,6 @@ export function Navbar({ handleDrawerOpen, open }) {
 }
 
 Navbar.propTypes = {
-    open: PropTypes.bool,
-    handleDrawerOpen: PropTypes.func
+    open: PropTypes.bool.isRequired,
+    handleDrawerOpen: PropTypes.func.isRequired
 };
