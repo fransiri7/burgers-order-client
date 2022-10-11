@@ -49,7 +49,7 @@ export function OrdersList() {
             name: "Francisco",
             address: "",
             status: false,
-            notes: "lo paso a retirar onda 22 hs",
+            notes: "pasa a retirar 22 hs aprox!",
             paymentMethod: "transfer",
             deliveredBy: "",
             takeAway: true,
@@ -66,7 +66,7 @@ export function OrdersList() {
                         productId: 7,
                         quantity: 1,
                         subtotal: 600,
-                        notes: "podrian ponerle poquita albahaca por favor?, soy alergico"
+                        notes: "poquita albahaca, ES ALERGICO!!!"
                     }
                 },
                 {
