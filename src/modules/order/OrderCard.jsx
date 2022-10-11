@@ -12,7 +12,7 @@ import moment from "moment";
 
 export function OrderCard({ order }) {
     return (
-        <Card component={Paper} elevation={5} style={{ border: "1px solid white", width: "100%", borderRadius: "10px" }}>
+        <Card component={Paper} elevation={10} style={{ border: "2px solid red", width: "100%", borderRadius: "10px" }}>
             <Grid container direction="column">
                 <Grid item container justifyContent="space-between" alignContent="center" alignItems="center">
                     <Grid item md={4} style={{ marginLeft: "1%" }}>
@@ -55,7 +55,7 @@ export function OrderCard({ order }) {
                     {order.products.map(product => (
                         <Grid key={product.orderProduct.id} item container justifyContent="space-around" alignItems="center">
                             <Grid item container md={10} alignItems="center">
-                                <Grid item>
+                                <Grid item style={{ marginLeft: "3%" }}>
                                     <IconButton style={{ cursor: "default" }}>
                                         <LunchDiningIcon style={{ color: product.hexColor }} />
                                     </IconButton>
@@ -68,16 +68,16 @@ export function OrderCard({ order }) {
                             <Grid item md={2}>
                                 ${product.price}
                             </Grid>
-                            <Grid item container alignItems="center" md={12} style={{ paddingLeft: "10%", paddingRight: "10%" }}>
+                            <Grid item container alignItems="center" style={{ paddingLeft: "10%", paddingRight: "10%" }}>
                                 {product.orderProduct.notes ? (
-                                    <Grid item md={2}>
+                                    <Grid item>
                                         <IconButton style={{ cursor: "default" }}>
                                             <WarningRoundedIcon fontSize="small" style={{ color: "orange" }} />
                                         </IconButton>
                                     </Grid>
                                 ) : null}
 
-                                <Grid item md={10} fontSize="70%">
+                                <Grid item fontSize="70%">
                                     {product.orderProduct.notes}
                                 </Grid>
                             </Grid>
@@ -93,15 +93,15 @@ export function OrderCard({ order }) {
                         </IconButton>
                     </Grid>
                 </Grid>
-                <Grid item container justifyContent="center" alignItems="center">
+                <Grid item container alignItems="center" justifyContent="center">
                     {order.notes ? (
-                        <Grid item md={2}>
-                            <IconButton style={{ cursor: "default", marginLeft: "15%" }}>
+                        <Grid item>
+                            <IconButton style={{ cursor: "default" }}>
                                 <PriorityHighRoundedIcon style={{ color: "red" }} />
                             </IconButton>
                         </Grid>
                     ) : null}
-                    <Grid item md={10} fontSize="70%">
+                    <Grid item fontSize="70%">
                         {order.notes}
                     </Grid>
                 </Grid>

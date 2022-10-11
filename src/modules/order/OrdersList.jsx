@@ -100,11 +100,11 @@ export function OrdersList() {
     ];
 
     return (
-        <Grid container direction="column" justifyContent="space-between" style={{ backgroundColor: "blue", height: "80vh" }}>
-            <Grid item alignItems="center" style={{ backgroundColor: "green", height: "10%" }}>
+        <Grid container direction="column" justifyContent="space-between" style={{ height: "80vh" }}>
+            <Grid item alignItems="center" style={{ height: "10%" }}>
                 ACA VAN A IR LOS SELECTS PARA FECHAS
             </Grid>
-            <Grid item container style={{ backgroundColor: "pink", height: "85%", overflowY: "scroll" }}>
+            <Grid item container style={{ height: "85%", overflowY: "scroll" }}>
                 {orders.map(order => {
                     return (
                         <Grid
