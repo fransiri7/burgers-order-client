@@ -112,7 +112,7 @@ export function OrdersList() {
                             item
                             container
                             justifyContent="center"
-                            md={4}
+                            md={6}
                             style={{ marginTop: "15px", marginBottom: "5px" }}
                         >
                             <Grid item md={11}>

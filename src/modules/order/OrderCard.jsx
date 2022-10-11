@@ -72,12 +72,12 @@ export function OrderCard({ order }) {
                                 {product.orderProduct.notes ? (
                                     <Grid item md={2}>
                                         <IconButton style={{ cursor: "default" }}>
-                                            <WarningRoundedIcon style={{ color: "orange" }} />
+                                            <WarningRoundedIcon fontSize="small" style={{ color: "orange" }} />
                                         </IconButton>
                                     </Grid>
                                 ) : null}
 
-                                <Grid item md={10}>
+                                <Grid item md={10} fontSize="70%">
                                     {product.orderProduct.notes}
                                 </Grid>
                             </Grid>
@@ -101,7 +101,7 @@ export function OrderCard({ order }) {
                             </IconButton>
                         </Grid>
                     ) : null}
-                    <Grid item md={10}>
+                    <Grid item md={10} fontSize="70%">
                         {order.notes}
                     </Grid>
                 </Grid>
