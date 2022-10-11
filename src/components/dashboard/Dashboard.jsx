@@ -8,7 +8,7 @@ import FormatListNumberedSharpIcon from "@mui/icons-material/FormatListNumberedS
 import HomeIcon from "@mui/icons-material/Home";
 import { Navbar } from "./Navbar";
 import { ProductsList, CreateOrEditProduct } from "../../modules/product/";
-import { OrdersList } from "../../modules/order/OrdersList";
+import { OrdersList } from "../../modules/order/";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { Home } from "../../modules/home/Home";
 

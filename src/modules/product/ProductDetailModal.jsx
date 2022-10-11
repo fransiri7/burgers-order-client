@@ -47,10 +47,10 @@ export function ProductDetailModal({ product }) {
 
 ProductDetailModal.propTypes = {
     product: PropTypes.shape({
-        id: PropTypes.number,
-        name: PropTypes.string,
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
         description: PropTypes.string,
-        price: PropTypes.number,
-        hexColor: PropTypes.string
+        price: PropTypes.number.isRequired,
+        hexColor: PropTypes.string.isRequired
     })
 };

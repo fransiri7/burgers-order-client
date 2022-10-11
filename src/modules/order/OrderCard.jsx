@@ -53,34 +53,37 @@ export function OrderCard({ order }) {
 
                 <Grid item container direction="column">
                     {order.products.map(product => (
-                        <Grid key={product.orderProduct.id} item container justifyContent="space-around" alignItems="center">
-                            <Grid item container md={10} alignItems="center">
-                                <Grid item style={{ marginLeft: "3%" }}>
-                                    <IconButton style={{ cursor: "default" }}>
-                                        <LunchDiningIcon style={{ color: product.hexColor }} />
-                                    </IconButton>
+                        <Grid item container key={product.orderProduct.id} direction="column">
+                            <Grid item container justifyContent="space-around" alignItems="center">
+                                <Grid item container md={10} alignItems="center">
+                                    <Grid item style={{ marginLeft: "3%" }}>
+                                        <IconButton style={{ cursor: "default" }}>
+                                            <LunchDiningIcon style={{ color: product.hexColor }} />
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid item>
+                                        {product.orderProduct.quantity} {product.name}
+                                    </Grid>
                                 </Grid>
-                                <Grid item>{product.orderProduct.quantity}</Grid>
-                                <Grid item style={{ marginLeft: "1%" }}>
-                                    {product.name}
+
+                                <Grid item md={2}>
+                                    ${product.price}
                                 </Grid>
                             </Grid>
-                            <Grid item md={2}>
-                                ${product.price}
-                            </Grid>
-                            <Grid item container alignItems="center" style={{ paddingLeft: "10%", paddingRight: "10%" }}>
-                                {product.orderProduct.notes ? (
+
+                            {product.orderProduct.notes ? (
+                                <Grid item container alignItems="center" style={{ paddingLeft: "10%", paddingRight: "10%" }}>
                                     <Grid item>
                                         <IconButton style={{ cursor: "default" }}>
                                             <WarningRoundedIcon fontSize="small" style={{ color: "orange" }} />
                                         </IconButton>
                                     </Grid>
-                                ) : null}
 
-                                <Grid item fontSize="70%">
-                                    {product.orderProduct.notes}
+                                    <Grid item fontSize="70%">
+                                        {product.orderProduct.notes}
+                                    </Grid>
                                 </Grid>
-                            </Grid>
+                            ) : null}
                         </Grid>
                     ))}
                 </Grid>
@@ -93,18 +96,18 @@ export function OrderCard({ order }) {
                         </IconButton>
                     </Grid>
                 </Grid>
-                <Grid item container alignItems="center" justifyContent="center">
-                    {order.notes ? (
+                {order.notes ? (
+                    <Grid item container alignItems="center" justifyContent="center">
                         <Grid item>
                             <IconButton style={{ cursor: "default" }}>
                                 <PriorityHighRoundedIcon style={{ color: "red" }} />
                             </IconButton>
                         </Grid>
-                    ) : null}
-                    <Grid item fontSize="70%">
-                        {order.notes}
+                        <Grid item fontSize="70%">
+                            {order.notes}
+                        </Grid>
                     </Grid>
-                </Grid>
+                ) : null}
             </Grid>
         </Card>
     );
@@ -112,27 +115,27 @@ export function OrderCard({ order }) {
 
 OrderCard.propTypes = {
     order: PropTypes.shape({
-        id: PropTypes.number,
-        name: PropTypes.string,
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
         address: PropTypes.string,
-        status: PropTypes.bool,
+        status: PropTypes.bool.isRequired,
         notes: PropTypes.string,
         paymentMethod: PropTypes.oneOf(["cash", "transfer"]),
         deliveredBy: PropTypes.string,
-        takeAway: PropTypes.bool,
-        totalPrice: PropTypes.number,
-        time: PropTypes.string,
+        takeAway: PropTypes.bool.isRequired,
+        totalPrice: PropTypes.number.isRequired,
+        time: PropTypes.string.isRequired,
         products: PropTypes.arrayOf(
             PropTypes.shape({
-                name: PropTypes.string,
-                price: PropTypes.number,
-                hexColor: PropTypes.string,
+                name: PropTypes.string.isRequired,
+                price: PropTypes.number.isRequired,
+                hexColor: PropTypes.string.isRequired,
                 orderProduct: PropTypes.shape({
-                    id: PropTypes.number,
-                    orderId: PropTypes.number,
-                    productId: PropTypes.number,
-                    quantity: PropTypes.number,
-                    subtotal: PropTypes.number,
+                    id: PropTypes.number.isRequired,
+                    orderId: PropTypes.number.isRequired,
+                    productId: PropTypes.number.isRequired,
+                    quantity: PropTypes.number.isRequired,
+                    subtotal: PropTypes.number.isRequired,
                     notes: PropTypes.string
                 })
             })
