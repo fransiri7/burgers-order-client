@@ -48,7 +48,7 @@ export function OrdersList() {
             id: 2,
             name: "Francisco",
             address: "",
-            status: false,
+            status: true,
             notes: "pasa a retirar 22 hs aprox!",
             paymentMethod: "transfer",
             deliveredBy: "",
