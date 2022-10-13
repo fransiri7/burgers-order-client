@@ -33,7 +33,7 @@ export function OrderCard({ order }) {
                             </IconButton>
                         </Grid>
                         <Grid item>
-                            {order.status === false ? (
+                            {!order.status ? (
                                 <IconButton>
                                     <TaskAltIcon />
                                 </IconButton>
@@ -55,11 +55,11 @@ export function OrderCard({ order }) {
                     {order.name}
                 </Grid>
                 <Divider />
-                <Grid item container justifyContent="space-evenly" alignItems="center">
-                    <Grid item md={7} style={{ paddingLeft: "2%" }}>
-                        {order.address}
-                    </Grid>
-                    {!order.takeAway ? (
+                {!order.takeAway ? (
+                    <Grid item container justifyContent="space-evenly" alignItems="center">
+                        <Grid item md={7} style={{ paddingLeft: "2%" }}>
+                            {order.address}
+                        </Grid>
                         <Grid item container md={5}>
                             <Grid item md={7}>
                                 <TextField label="deliveredBy" size="small"></TextField>
@@ -77,8 +77,8 @@ export function OrderCard({ order }) {
                                 </Grid>
                             </Grid>
                         </Grid>
-                    ) : null}
-                </Grid>
+                    </Grid>
+                ) : null}
 
                 <Grid item container direction="column">
                     {order.products.map(product => (
