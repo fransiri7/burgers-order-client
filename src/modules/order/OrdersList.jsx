@@ -1,6 +1,7 @@
 import React from "react";
 import { OrderCard } from "./OrderCard";
-import { Grid } from "@mui/material";
+import { Button, Grid, IconButton, Switch, TextField, Typography } from "@mui/material";
+import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 
 export function OrdersList() {
     const orders = [
@@ -101,8 +102,36 @@ export function OrdersList() {
 
     return (
         <Grid container direction="column" justifyContent="space-between" style={{ height: "80vh" }}>
-            <Grid item alignItems="center" style={{ height: "10%" }}>
-                ACA VAN A IR LOS SELECTS PARA FECHAS
+            <Grid item container alignItems="center" style={{ height: "10%" }}>
+                <Grid item container md={9} alignItems="center">
+                    <Grid item container md={3} alignItems="center" justifyContent="center">
+                        <Grid item>
+                            <Typography>Day</Typography>
+                        </Grid>
+                        <Grid item>
+                            <Switch />
+                        </Grid>
+                        <Grid item>
+                            <Typography>Period</Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid item style={{ marginRight: "1%" }}>
+                        <TextField label="Date From" type="date" defaultValue="2022-01-30" sm={{ width: 220 }} />
+                    </Grid>
+                    <Grid item style={{ marginRight: "1%" }}>
+                        <TextField label="Date To" type="date" defaultValue="2022-02-15" sm={{ width: 220 }} />
+                    </Grid>
+                    <Grid item>
+                        <IconButton>
+                            <SearchTwoToneIcon />
+                        </IconButton>
+                    </Grid>
+                </Grid>
+                <Grid item container md={3} justifyContent="flex-end">
+                    <Grid item style={{ marginRight: "10%" }}>
+                        <Button variant="outlined">Add Order</Button>
+                    </Grid>
+                </Grid>
             </Grid>
             <Grid item container style={{ height: "85%", overflowY: "scroll" }}>
                 {orders.map(order => {
