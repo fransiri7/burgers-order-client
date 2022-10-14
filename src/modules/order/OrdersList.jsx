@@ -8,14 +8,12 @@ export function OrdersList() {
     const [isPeriod, setIsPeriod] = useState(false);
     const [date, setDate] = useState({
         dateFrom: moment().format("yyyy-MM-DD"),
-        dateTo: moment().format("yyyy-MM-DD")
+        dateTo: null
     });
 
-    const handleDatePickersChange = event => {
+    const handleDatePickerChange = event => {
         event.preventDefault();
-        event.target.name === "dateFrom"
-            ? setDate({ ...date, dateFrom: event.target.value })
-            : setDate({ ...date, dateTo: event.target.value });
+        setDate({ ...date, [event.target.name]: event.target.value });
     };
     const orders = [
         {
@@ -124,8 +122,13 @@ export function OrdersList() {
                         <Grid item>
                             <Switch
                                 checked={isPeriod}
-                                onChange={() => {
-                                    setIsPeriod(!isPeriod);
+                                onChange={event => {
+                                    setIsPeriod(event.target.checked);
+                                    if (event.target.checked) {
+                                        setDate({ ...date, dateTo: moment().format("yyyy-MM-DD") });
+                                    } else {
+                                        setDate({ ...date, dateTo: null });
+                                    }
                                 }}
                             />
                         </Grid>
@@ -140,7 +143,7 @@ export function OrdersList() {
                             type="date"
                             value={date.dateFrom}
                             sm={{ width: 220 }}
-                            onChange={handleDatePickersChange}
+                            onChange={handleDatePickerChange}
                         />
                     </Grid>
                     {isPeriod ? (
@@ -151,7 +154,7 @@ export function OrdersList() {
                                 type="date"
                                 value={date.dateTo}
                                 sm={{ width: 220 }}
-                                onChange={handleDatePickersChange}
+                                onChange={handleDatePickerChange}
                             />
                         </Grid>
                     ) : null}
