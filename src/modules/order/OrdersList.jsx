@@ -5,9 +5,6 @@ import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 
 export function OrdersList() {
     const [isPeriod, setIsPeriod] = useState(false);
-    const handleSwitchChange = () => {
-        !isPeriod ? setIsPeriod(true) : setIsPeriod(false);
-    };
     const orders = [
         {
             id: 1,
@@ -113,7 +110,12 @@ export function OrdersList() {
                             <Typography>Day</Typography>
                         </Grid>
                         <Grid item>
-                            <Switch checked={isPeriod} onChange={handleSwitchChange} />
+                            <Switch
+                                checked={isPeriod}
+                                onChange={() => {
+                                    setIsPeriod(!isPeriod);
+                                }}
+                            />
                         </Grid>
                         <Grid item>
                             <Typography>Period</Typography>
