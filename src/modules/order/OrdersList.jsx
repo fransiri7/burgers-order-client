@@ -116,28 +116,10 @@ export function OrdersList() {
                         </Grid>
                     </Grid>
                     <Grid item style={{ marginRight: "1%" }}>
-                        <TextField
-                            id="datefrom"
-                            label="Date From"
-                            type="date"
-                            defaultValue="2022-01-30"
-                            sm={{ width: 220 }}
-                            InputLabelProps={{
-                                shrink: true
-                            }}
-                        />
+                        <TextField label="Date From" type="date" defaultValue="2022-01-30" sm={{ width: 220 }} />
                     </Grid>
                     <Grid item style={{ marginRight: "1%" }}>
-                        <TextField
-                            id="dateto"
-                            label="Date To"
-                            type="date"
-                            defaultValue="2022-02-15"
-                            sm={{ width: 220 }}
-                            InputLabelProps={{
-                                shrink: true
-                            }}
-                        />
+                        <TextField label="Date To" type="date" defaultValue="2022-02-15" sm={{ width: 220 }} />
                     </Grid>
                     <Grid item>
                         <IconButton>
@@ -145,10 +127,10 @@ export function OrdersList() {
                         </IconButton>
                     </Grid>
                 </Grid>
-                <Grid item md={3} style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <Button variant="outlined" style={{ width: "70%" }}>
-                        Add Order
-                    </Button>
+                <Grid item container md={3} justifyContent="flex-end">
+                    <Grid item style={{ marginRight: "10%" }}>
+                        <Button variant="outlined">Add Order</Button>
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid item container style={{ height: "85%", overflowY: "scroll" }}>
