@@ -1,9 +1,13 @@
-import React from "react";
+import { React, useState } from "react";
 import { OrderCard } from "./OrderCard";
 import { Button, Grid, IconButton, Switch, TextField, Typography } from "@mui/material";
 import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 
 export function OrdersList() {
+    const [isPeriod, setIsPeriod] = useState(false);
+    const handleSwitchChange = () => {
+        !isPeriod ? setIsPeriod(true) : setIsPeriod(false);
+    };
     const orders = [
         {
             id: 1,
@@ -109,7 +113,7 @@ export function OrdersList() {
                             <Typography>Day</Typography>
                         </Grid>
                         <Grid item>
-                            <Switch />
+                            <Switch checked={isPeriod} onChange={handleSwitchChange} />
                         </Grid>
                         <Grid item>
                             <Typography>Period</Typography>
@@ -118,9 +122,12 @@ export function OrdersList() {
                     <Grid item style={{ marginRight: "1%" }}>
                         <TextField label="Date From" type="date" defaultValue="2022-01-30" sm={{ width: 220 }} />
                     </Grid>
-                    <Grid item style={{ marginRight: "1%" }}>
-                        <TextField label="Date To" type="date" defaultValue="2022-02-15" sm={{ width: 220 }} />
-                    </Grid>
+                    {isPeriod ? (
+                        <Grid item style={{ marginRight: "1%" }}>
+                            <TextField label="Date To" type="date" defaultValue="2022-02-15" sm={{ width: 220 }} />
+                        </Grid>
+                    ) : null}
+
                     <Grid item>
                         <IconButton>
                             <SearchTwoToneIcon />
