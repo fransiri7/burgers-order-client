@@ -4,9 +4,11 @@ import { Button, Grid, MenuItem, Select, Switch, TextField, Typography } from "@
 export function CreateOrder() {
     return (
         <Grid container direction="column" justifyContent="space-around" alignItems="center">
-            <Grid item container>
+            <Grid item container style={{ width: "83.5%" }}>
                 <Grid item>
-                    <h1>Create Order</h1>
+                    <Typography variant="h5" fontWeight="bold">
+                        Create Order
+                    </Typography>
                 </Grid>
             </Grid>
             <Grid item container alignItems="center" justifyContent="center">
