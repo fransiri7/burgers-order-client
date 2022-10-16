@@ -11,11 +11,11 @@ export function CreateOrder() {
                     </Typography>
                 </Grid>
             </Grid>
-            <Grid item container alignItems="center" justifyContent="center">
-                <Grid item md={6}>
-                    <TextField label="Name" variant="outlined" style={{ width: "80%" }}></TextField>
+            <Grid item container alignItems="center" justifyContent="space-between">
+                <Grid item md={8}>
+                    <TextField label="Name" variant="outlined" fullWidth />
                 </Grid>
-                <Grid item container md={4}>
+                <Grid item container md={3}>
                     <Grid item>
                         <Typography variant="h6">Cash</Typography>
                     </Grid>
@@ -24,11 +24,11 @@ export function CreateOrder() {
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item container alignItems="center" justifyContent="center">
-                <Grid item md={6}>
-                    <TextField label="Direction" variant="outlined" style={{ width: "80%" }}></TextField>
+            <Grid item container alignItems="center" justifyContent="space-between">
+                <Grid item md={8}>
+                    <TextField label="Address" variant="outlined" fullWidth />
                 </Grid>
-                <Grid item container md={4}>
+                <Grid item container md={3}>
                     <Grid item>
                         <Typography variant="h6">Take Away</Typography>
                     </Grid>
@@ -39,20 +39,14 @@ export function CreateOrder() {
             </Grid>
 
             <Grid item container alignItems="center" justifyContent="center">
-                <Grid item md={10}>
-                    <TextField
-                        id="outlined-textarea"
-                        label="Notes direction"
-                        multiline
-                        variant="outlined"
-                        style={{ width: "80%" }}
-                    ></TextField>
+                <Grid item md={12}>
+                    <TextField id="outlined-textarea" label="Order notes" multiline variant="outlined" fullWidth />
                 </Grid>
             </Grid>
 
-            <Grid item container alignItems="center" justifyContent="center" spacing={2}>
-                <Grid item container md={10}>
-                    <Grid item md={6}>
+            <Grid item container direction="column" justifyContent="space-around" alignItems="center" spacing={2}>
+                <Grid item container>
+                    <Grid item md={8}>
                         <Select style={{ width: "96%" }}>
                             <MenuItem value={1}>American Burger</MenuItem>
                             <MenuItem value={2}>Bell Peper Cheese</MenuItem>
@@ -63,7 +57,7 @@ export function CreateOrder() {
                             <MenuItem value={7}>Veggie Burger</MenuItem>
                         </Select>
                     </Grid>
-                    <Grid item md={0.5}>
+                    <Grid item md={1}>
                         <Select>
                             <MenuItem value={1}>1</MenuItem>
                             <MenuItem value={2}>2</MenuItem>
@@ -76,7 +70,7 @@ export function CreateOrder() {
                             <MenuItem value={9}>9</MenuItem>
                         </Select>
                     </Grid>
-                    <Grid item md={1.5}>
+                    <Grid item md={1}>
                         <TextField
                             id="outlined-read-only-input"
                             label="Sub-Total"
@@ -88,49 +82,32 @@ export function CreateOrder() {
                     </Grid>
                     <Grid item container md={2} alignItems="center" justifyContent="center" spacing={1}>
                         <Grid item>
-                            <Button variant="outlined" style={{ width: "70%" }}>
-                                +
-                            </Button>
+                            <Button variant="outlined">+</Button>
                         </Grid>
                         <Grid item>
-                            <Button variant="outlined" style={{ width: "70%" }}>
-                                -
-                            </Button>
+                            <Button variant="outlined">-</Button>
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid item container alignItems="center" justifyContent="center">
-                    <Grid item md={10}>
-                        <TextField
-                            id="outlined-textarea"
-                            label="Notes product"
-                            multiline
-                            variant="outlined"
-                            style={{ width: "80%" }}
-                        ></TextField>
+                    <Grid item md={12}>
+                        <TextField id="outlined-textarea" label="Notes product" multiline variant="outlined" fullWidth />
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item container alignItems="center" justifyContent="center">
                 <Grid item>
-                    <TextField
-                        id="outlined-read-only-input"
-                        label="Total"
-                        defaultValue="$ 5000"
-                        InputProps={{
-                            readOnly: true
-                        }}
-                    />
+                    <TextField id="outlined-read-only-input" label="Total" defaultValue="$ 5000" />
                 </Grid>
             </Grid>
-            <Grid item container md={2} alignItems="center" justifyContent="center">
+            <Grid item container md={2} justifyContent="space-between">
                 <Grid item>
-                    <Button variant="outlined" style={{ width: "70%" }} size="large">
+                    <Button variant="outlined" size="large">
                         Back
                     </Button>
                 </Grid>
                 <Grid item>
-                    <Button variant="outlined" style={{ width: "70%" }} size="large">
+                    <Button variant="outlined" size="large">
                         Add
                     </Button>
                 </Grid>
