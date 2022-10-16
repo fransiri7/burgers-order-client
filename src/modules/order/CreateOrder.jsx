@@ -17,7 +17,6 @@ export function CreateOrder() {
                     </Grid>
                 </Grid>
             </Grid>
-
             <Grid item container alignItems="center" justifyContent="center">
                 <Grid item md={6}>
                     <TextField label="Direction" variant="outlined" style={{ width: "80%" }}></TextField>
@@ -41,7 +40,15 @@ export function CreateOrder() {
             <Grid item container alignItems="center" justifyContent="center" spacing={2}>
                 <Grid item container md={10}>
                     <Grid item md={6}>
-                        <TextField label="Name of product" variant="outlined" style={{ width: "100%" }}></TextField>
+                        <Select style={{ width: "96%" }}>
+                            <MenuItem value={1}>American Burger</MenuItem>
+                            <MenuItem value={2}>Bell Peper Cheese</MenuItem>
+                            <MenuItem value={3}>Blue Cheese Burger</MenuItem>
+                            <MenuItem value={4}>Capresse Burger</MenuItem>
+                            <MenuItem value={5}>Cheese Bacon Burger</MenuItem>
+                            <MenuItem value={6}>Kid Burger</MenuItem>
+                            <MenuItem value={7}>Veggie Burger</MenuItem>
+                        </Select>
                     </Grid>
                     <Grid item md={0.5}>
                         <Select>
