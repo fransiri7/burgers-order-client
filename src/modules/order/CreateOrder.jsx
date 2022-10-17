@@ -71,14 +71,7 @@ export function CreateOrder() {
                         </Select>
                     </Grid>
                     <Grid item md={1}>
-                        <TextField
-                            id="outlined-read-only-input"
-                            label="Sub-Total"
-                            defaultValue="$ 5000"
-                            InputProps={{
-                                readOnly: true
-                            }}
-                        />
+                        <TextField id="outlined-read-only-input" label="Sub-Total" defaultValue="$ 5000" />
                     </Grid>
                     <Grid item container md={2} alignItems="center" justifyContent="center" spacing={1}>
                         <Grid item>
@@ -100,16 +93,18 @@ export function CreateOrder() {
                     <TextField id="outlined-read-only-input" label="Total" defaultValue="$ 5000" />
                 </Grid>
             </Grid>
-            <Grid item container md={2} justifyContent="space-between">
-                <Grid item>
-                    <Button variant="outlined" size="large">
-                        Back
-                    </Button>
-                </Grid>
-                <Grid item>
-                    <Button variant="outlined" size="large">
-                        Add
-                    </Button>
+            <Grid item container alignItems="center" justifyContent="center">
+                <Grid item container md={2} justifyContent="space-between">
+                    <Grid item>
+                        <Button variant="outlined" size="large">
+                            Back
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button variant="outlined" size="large">
+                            Add
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
