@@ -40,7 +40,7 @@ export function CreateOrder() {
 
             <Grid item container alignItems="center" justifyContent="center">
                 <Grid item md={12}>
-                    <TextField id="outlined-textarea" label="Order notes" multiline variant="outlined" fullWidth />
+                    <TextField label="Order notes" multiline variant="outlined" fullWidth />
                 </Grid>
             </Grid>
 
@@ -71,7 +71,7 @@ export function CreateOrder() {
                         </Select>
                     </Grid>
                     <Grid item md={1}>
-                        <TextField id="outlined-read-only-input" label="Sub-Total" defaultValue="$ 5000" />
+                        <TextField label="Subtotal" defaultValue="$ 5000" />
                     </Grid>
                     <Grid item container md={2} alignItems="center" justifyContent="center" spacing={1}>
                         <Grid item>
@@ -84,17 +84,17 @@ export function CreateOrder() {
                 </Grid>
                 <Grid item container alignItems="center" justifyContent="center">
                     <Grid item md={12}>
-                        <TextField id="outlined-textarea" label="Notes product" multiline variant="outlined" fullWidth />
+                        <TextField label="Notes product" multiline variant="outlined" fullWidth />
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item container alignItems="center" justifyContent="center">
                 <Grid item>
-                    <TextField id="outlined-read-only-input" label="Total" defaultValue="$ 5000" />
+                    <TextField label="Total" defaultValue="$ 5000" />
                 </Grid>
             </Grid>
             <Grid item container alignItems="center" justifyContent="center">
-                <Grid item container md={2} justifyContent="space-between">
+                <Grid item container md={2} justifyContent="space-around">
                     <Grid item>
                         <Button variant="outlined" size="large">
                             Back
