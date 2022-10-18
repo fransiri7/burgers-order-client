@@ -1,6 +1,5 @@
-/* eslint-disable */
 import React from "react";
-import { Card, Divider, Grid, IconButton, Paper, TextField } from "@mui/material";
+import { Card, Divider, Grid, IconButton, Paper } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import UnpublishedIcon from "@mui/icons-material/Unpublished";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
@@ -10,7 +9,7 @@ import MoneyRoundedIcon from "@mui/icons-material/MoneyRounded";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import PriorityHighRoundedIcon from "@mui/icons-material/PriorityHighRounded";
-import SaveIcon from "@mui/icons-material/Save";
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import { PropTypes } from "prop-types";
 import moment from "moment";
 import swAlert from "sweetalert2";
@@ -102,19 +101,31 @@ export function OrderCard({ order, setOrders }) {
                         <Grid item md={7} style={{ paddingLeft: "2%" }}>
                             {order.address}
                         </Grid>
-                        <Grid item container md={5}>
-                            <Grid item md={7}>
-                                <TextField label="deliveredBy" size="small"></TextField>
-                            </Grid>
-                            <Grid item container md={5}>
-                                <Grid item md={6}>
-                                    <IconButton>
-                                        <EditIcon />
+                        <Grid item container md={5} alignItems="center" justifyContent="space-between">
+                            <Grid item container md={10} justifyContent="flex-start" alignItems="center">
+                                <Grid item>
+                                    <IconButton style={{ cursor: "default" }}>
+                                        <DeliveryDiningIcon />
                                     </IconButton>
                                 </Grid>
-                                <Grid item md={6}>
+                                <Grid
+                                    item
+                                    style={{
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        width: "65%",
+                                        direction: "ltr"
+                                    }}
+                                >
+                                    {order.deliveredBy}
+                                </Grid>
+                            </Grid>
+
+                            <Grid item container md={2} justifyContent="flex-end">
+                                <Grid item>
                                     <IconButton>
-                                        <SaveIcon />
+                                        <EditIcon />
                                     </IconButton>
                                 </Grid>
                             </Grid>
@@ -217,5 +228,6 @@ OrderCard.propTypes = {
                 })
             })
         )
-    })
+    }),
+    setOrders: PropTypes.func.isRequired
 };
