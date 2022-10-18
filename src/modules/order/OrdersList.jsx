@@ -1,7 +1,6 @@
 import { React, useState } from "react";
 import { OrderCard } from "./OrderCard";
-import { Button, Grid, IconButton, Switch, TextField, Typography } from "@mui/material";
-import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
+import { Button, Grid, Switch, TextField, Typography } from "@mui/material";
 import moment from "moment/moment";
 import { useAllOrders } from "./utils/apiHooks";
 import { Loading } from "../../components/loading/Loading";
@@ -70,12 +69,6 @@ export function OrdersList() {
                             />
                         </Grid>
                     ) : null}
-
-                    <Grid item>
-                        <IconButton>
-                            <SearchTwoToneIcon />
-                        </IconButton>
-                    </Grid>
                 </Grid>
                 <Grid item container md={3} justifyContent="flex-end">
                     <Grid item style={{ marginRight: "10%" }}>
