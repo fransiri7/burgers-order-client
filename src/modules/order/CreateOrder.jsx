@@ -94,7 +94,7 @@ export function CreateOrder() {
                 </Grid>
             </Grid>
             <Grid item container alignItems="center" justifyContent="center">
-                <Grid item container md={2} justifyContent="space-around">
+                <Grid item container md={3} justifyContent="space-around">
                     <Grid item>
                         <Button variant="outlined" size="large">
                             Back
