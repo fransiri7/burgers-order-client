@@ -125,7 +125,7 @@ export function OrderCard({ order, setOrders }) {
 
                             <Grid item container md={2} justifyContent="flex-end">
                                 <Grid item>
-                                    <DeliveryModal />
+                                    <DeliveryModal orderId={order.id} setOrders={setOrders} />
                                 </Grid>
                             </Grid>
                         </Grid>

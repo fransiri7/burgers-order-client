@@ -3,8 +3,13 @@ import { Dialog, DialogContent, DialogTitle, Grid, IconButton, TextField, Typogr
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
+import { editDelivery } from "./utils/service";
+import swAlert from "sweetalert2";
+import { red } from "@mui/material/colors";
+import { PropTypes } from "prop-types";
 
-export function DeliveryModal() {
+export function DeliveryModal({ orderId, setOrders }) {
+    const [deliveryText, setDeliveryText] = useState("");
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -12,6 +17,38 @@ export function DeliveryModal() {
     };
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleDeliveryTextChange = event => {
+        event.preventDefault();
+        setDeliveryText(event.target.value);
+    };
+
+    const handleEditDelivery = async id => {
+        try {
+            await editDelivery(id, deliveryText);
+            setOrders(orders =>
+                orders.map(order => {
+                    if (order.id === id) {
+                        order.deliveredBy = deliveryText;
+                    }
+                    return order;
+                })
+            );
+            setOpen(false);
+        } catch (error) {
+            setOpen(false);
+            swAlert
+                .fire({
+                    title: error.message,
+                    icon: "error",
+                    confirmButtonColor: `${red[500]}`,
+                    confirmButtonText: "Ok"
+                })
+                .then(() => {
+                    window.location.reload();
+                });
+        }
     };
 
     return (
@@ -41,10 +78,20 @@ export function DeliveryModal() {
                 <DialogContent dividers>
                     <Grid item container>
                         <Grid item>
-                            <TextField size="small" />
+                            <TextField
+                                label="Delivery"
+                                variant="outlined"
+                                value={deliveryText}
+                                onChange={handleDeliveryTextChange}
+                                size="small"
+                            />
                         </Grid>
                         <Grid item>
-                            <IconButton>
+                            <IconButton
+                                onClick={() => {
+                                    handleEditDelivery(orderId);
+                                }}
+                            >
                                 <SaveIcon />
                             </IconButton>
                         </Grid>
@@ -54,3 +101,8 @@ export function DeliveryModal() {
         </>
     );
 }
+
+DeliveryModal.propTypes = {
+    orderId: PropTypes.number.isRequired,
+    setOrders: PropTypes.func.isRequired
+};
