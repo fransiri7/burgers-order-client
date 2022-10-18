@@ -15,6 +15,7 @@ import moment from "moment";
 import swAlert from "sweetalert2";
 import { green, red } from "@mui/material/colors";
 import { deleteOrder } from "./utils/service";
+import { DeliveryModal } from "./DeliveryModal";
 
 export function OrderCard({ order, setOrders }) {
     const handleDeleteOrderSubmit = id => {
@@ -124,9 +125,7 @@ export function OrderCard({ order, setOrders }) {
 
                             <Grid item container md={2} justifyContent="flex-end">
                                 <Grid item>
-                                    <IconButton>
-                                        <EditIcon />
-                                    </IconButton>
+                                    <DeliveryModal />
                                 </Grid>
                             </Grid>
                         </Grid>
