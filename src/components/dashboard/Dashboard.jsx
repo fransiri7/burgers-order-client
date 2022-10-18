@@ -8,6 +8,7 @@ import FormatListNumberedSharpIcon from "@mui/icons-material/FormatListNumberedS
 import HomeIcon from "@mui/icons-material/Home";
 import { Navbar } from "./Navbar";
 import { ProductsList, CreateOrEditProduct } from "../../modules/product/";
+import { CreateOrder } from "../../modules/order/CreateOrder";
 import { OrdersList } from "../../modules/order/";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { Home } from "../../modules/home/Home";
@@ -110,6 +111,7 @@ export function Dashboard() {
                         <Route path="/" element={<Home />} />
                         <Route path="/products" element={<ProductsList />} />
                         <Route path="/orders" element={<OrdersList />} />
+                        <Route path="/orders/create" element={<CreateOrder />} />
                         <Route path="/products/create" element={<CreateOrEditProduct />} />
                         <Route path="/products/edit/:id" element={<CreateOrEditProduct />} />
                     </Routes>
