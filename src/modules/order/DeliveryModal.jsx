@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { React, useState } from "react";
 import { Dialog, DialogContent, DialogTitle, Grid, IconButton, TextField, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -20,16 +19,27 @@ export function DeliveryModal() {
             <IconButton onClick={handleClickOpen}>
                 <EditIcon />
             </IconButton>
-            <Dialog onClose={handleClose} open={open} width="70%">
+            <Dialog onClose={handleClose} open={open}>
                 <DialogTitle sx={{ m: 0, p: 2 }}>
+                    <IconButton
+                        onClick={handleClose}
+                        sx={{
+                            position: "absolute",
+                            right: 0,
+                            top: 0,
+                            color: theme => theme.palette.grey[500]
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
                     <Grid item container justifyContent="center">
                         <Grid item>
-                            <Typography variant="h6">Who is delivering this order?</Typography>
+                            <Typography variant="body1">Who is delivering this order?</Typography>
                         </Grid>
                     </Grid>
                 </DialogTitle>
                 <DialogContent dividers>
-                    <Grid item container alignItems="center" justifyContent="space-around">
+                    <Grid item container>
                         <Grid item>
                             <TextField size="small" />
                         </Grid>

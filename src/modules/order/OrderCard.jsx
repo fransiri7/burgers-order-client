@@ -18,15 +18,15 @@ import { deleteOrder } from "./utils/service";
 import { DeliveryModal } from "./DeliveryModal";
 
 export function OrderCard({ order, setOrders }) {
-    const handleDeleteOrderSubmit = id => {
+    const deleteOrderWithAlert = id => {
         swAlert
             .fire({
-                title: "Are you sure you want to delete this order?",
+                title: `Are you sure you want to delete ${order.name}'s order?`,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: `${green[500]}`,
                 cancelButtonColor: `${red[500]}`,
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Delete it!"
             })
             .then(async result => {
                 try {
@@ -85,7 +85,7 @@ export function OrderCard({ order, setOrders }) {
                         <Grid item>
                             <IconButton
                                 onClick={() => {
-                                    handleDeleteOrderSubmit(order.id);
+                                    deleteOrderWithAlert(order.id);
                                 }}
                             >
                                 <DeleteIcon />
