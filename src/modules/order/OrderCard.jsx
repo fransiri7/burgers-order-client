@@ -14,7 +14,7 @@ import { PropTypes } from "prop-types";
 import moment from "moment";
 import swAlert from "sweetalert2";
 import { green, red } from "@mui/material/colors";
-import { deleteOrder } from "./utils/service";
+import { deleteOrder, editOrderStatus } from "./utils/service";
 import { DeliveryModal } from "./DeliveryModal";
 
 export function OrderCard({ order, setOrders }) {
@@ -52,6 +52,18 @@ export function OrderCard({ order, setOrders }) {
                 }
             });
     };
+
+    const handleOrderStatusChange = async id => {
+        await editOrderStatus(id);
+        setOrders(orders =>
+            orders.map(order => {
+                if (order.id === id) {
+                    order.status = !order.status;
+                }
+                return order;
+            })
+        );
+    };
     return (
         <Card
             component={Paper}
@@ -72,11 +84,19 @@ export function OrderCard({ order, setOrders }) {
                         </Grid>
                         <Grid item>
                             {!order.status ? (
-                                <IconButton>
+                                <IconButton
+                                    onClick={() => {
+                                        handleOrderStatusChange(order.id);
+                                    }}
+                                >
                                     <TaskAltIcon />
                                 </IconButton>
                             ) : (
-                                <IconButton>
+                                <IconButton
+                                    onClick={() => {
+                                        handleOrderStatusChange(order.id);
+                                    }}
+                                >
                                     <UnpublishedIcon />
                                 </IconButton>
                             )}
