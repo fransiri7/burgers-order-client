@@ -11,7 +11,7 @@ export function OrdersList() {
         dateFrom: moment().format("yyyy-MM-DD"),
         dateTo: null
     });
-    const [orders, getOrderCompleted] = useAllOrders(date.dateFrom, date.dateTo);
+    const [orders, setOrders, getOrderCompleted] = useAllOrders(date.dateFrom, date.dateTo);
 
     const handleDatePickerChange = event => {
         event.preventDefault();
@@ -80,7 +80,7 @@ export function OrdersList() {
                 {orders.map(order => (
                     <Grid key={order.id} item container justifyContent="center" md={6} style={{ marginTop: "15px", marginBottom: "5px" }}>
                         <Grid item md={11}>
-                            <OrderCard order={order} />
+                            <OrderCard order={order} setOrders={setOrders} />
                         </Grid>
                     </Grid>
                 ))}

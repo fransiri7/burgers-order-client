@@ -3,7 +3,8 @@ import axios from "axios";
 const baseURL = process.env.REACT_APP_API_URL;
 
 const URLS = {
-    GET_ORDERS: (dateFrom, dateTo) => `${baseURL}/order?dateFrom=${dateFrom}&dateTo=${dateTo}`
+    GET_ORDERS: (dateFrom, dateTo) => `${baseURL}/order?dateFrom=${dateFrom}&dateTo=${dateTo}`,
+    DELETE_ORDER: id => `${baseURL}/order/${id}`
 };
 
 export const getOrders = async (dateFrom, dateTo) => {
@@ -12,5 +13,14 @@ export const getOrders = async (dateFrom, dateTo) => {
         return response.data.data;
     } else {
         throw Error(response.data.msg);
+    }
+};
+
+export const deleteOrder = async id => {
+    const response = await axios.delete(URLS.DELETE_ORDER(id));
+    if (response.data.success) {
+        return response.data.msg;
+    } else {
+        throw new Error(response.data.msg);
     }
 };

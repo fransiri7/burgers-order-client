@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import { Card, Divider, Grid, IconButton, Paper, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -12,8 +13,45 @@ import PriorityHighRoundedIcon from "@mui/icons-material/PriorityHighRounded";
 import SaveIcon from "@mui/icons-material/Save";
 import { PropTypes } from "prop-types";
 import moment from "moment";
+import swAlert from "sweetalert2";
+import { green, red } from "@mui/material/colors";
+import { deleteOrder } from "./utils/service";
 
-export function OrderCard({ order }) {
+export function OrderCard({ order, setOrders }) {
+    const handleDeleteOrderSubmit = id => {
+        swAlert
+            .fire({
+                title: "Are you sure you want to delete this order?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: `${green[500]}`,
+                cancelButtonColor: `${red[500]}`,
+                confirmButtonText: "Yes, delete it!"
+            })
+            .then(async result => {
+                try {
+                    if (result.isConfirmed) {
+                        const msg = await deleteOrder(id);
+                        swAlert.fire({
+                            title: msg,
+                            confirmButtonColor: `${green[500]}`
+                        });
+                        setOrders(orders => orders.filter(order => order.id !== id));
+                    }
+                } catch (error) {
+                    swAlert
+                        .fire({
+                            title: "ERROR!",
+                            text: error.message,
+                            icon: "error",
+                            confirmButtonColor: `${red[500]}`
+                        })
+                        .then(() => {
+                            window.location.reload();
+                        });
+                }
+            });
+    };
     return (
         <Card
             component={Paper}
@@ -45,7 +83,11 @@ export function OrderCard({ order }) {
                         </Grid>
 
                         <Grid item>
-                            <IconButton>
+                            <IconButton
+                                onClick={() => {
+                                    handleDeleteOrderSubmit(order.id);
+                                }}
+                            >
                                 <DeleteIcon />
                             </IconButton>
                         </Grid>
