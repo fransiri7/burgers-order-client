@@ -31,5 +31,5 @@ export const useAllOrders = (dateFrom, dateTo) => {
         getAllOrders();
     }, [getAllOrders]);
 
-    return [orders, completed];
+    return [orders, setOrders, completed];
 };

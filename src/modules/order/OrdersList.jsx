@@ -4,14 +4,16 @@ import { Button, Grid, Switch, TextField, Typography } from "@mui/material";
 import moment from "moment/moment";
 import { useAllOrders } from "./utils/apiHooks";
 import { Loading } from "../../components/loading/Loading";
+import { useNavigate } from "react-router-dom";
 
 export function OrdersList() {
+    const navigate = useNavigate();
     const [isPeriod, setIsPeriod] = useState(false);
     const [date, setDate] = useState({
         dateFrom: moment().format("yyyy-MM-DD"),
         dateTo: null
     });
-    const [orders, getOrderCompleted] = useAllOrders(date.dateFrom, date.dateTo);
+    const [orders, setOrders, getOrderCompleted] = useAllOrders(date.dateFrom, date.dateTo);
 
     const handleDatePickerChange = event => {
         event.preventDefault();
@@ -72,7 +74,14 @@ export function OrdersList() {
                 </Grid>
                 <Grid item container md={3} justifyContent="flex-end">
                     <Grid item style={{ marginRight: "10%" }}>
-                        <Button variant="outlined">Add Order</Button>
+                        <Button
+                            variant="outlined"
+                            onClick={() => {
+                                navigate("/orders/create");
+                            }}
+                        >
+                            Add Order
+                        </Button>
                     </Grid>
                 </Grid>
             </Grid>
@@ -80,7 +89,7 @@ export function OrdersList() {
                 {orders.map(order => (
                     <Grid key={order.id} item container justifyContent="center" md={6} style={{ marginTop: "15px", marginBottom: "5px" }}>
                         <Grid item md={11}>
-                            <OrderCard order={order} />
+                            <OrderCard order={order} setOrders={setOrders} />
                         </Grid>
                     </Grid>
                 ))}
