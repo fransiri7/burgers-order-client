@@ -7,7 +7,7 @@ import { Loading } from "../../components/loading/Loading";
 import { useNavigate } from "react-router-dom";
 
 export function OrdersList() {
-    const ordersSort = orders => {
+    const sortOrders = orders => {
         return orders.sort((a, b) => {
             if (a.status === b.status) {
                 if (a.time < b.time) {
@@ -18,11 +18,7 @@ export function OrdersList() {
                     return 0;
                 }
             } else {
-                if (a.status) {
-                    return -1;
-                } else {
-                    return 1;
-                }
+                return a.status ? -1 : 1;
             }
         });
     };
@@ -106,7 +102,7 @@ export function OrdersList() {
                 </Grid>
             </Grid>
             <Grid item container style={{ height: "85%", overflowY: "scroll" }}>
-                {ordersSort(orders).map(order => (
+                {sortOrders(orders).map(order => (
                     <Grid key={order.id} item container justifyContent="center" md={6} style={{ marginTop: "15px", marginBottom: "5px" }}>
                         <Grid item md={11}>
                             <OrderCard order={order} setOrders={setOrders} />
