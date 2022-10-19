@@ -96,23 +96,13 @@ export function OrderCard({ order, setOrders }) {
                             </IconButton>
                         </Grid>
                         <Grid item>
-                            {!order.status ? (
-                                <IconButton
-                                    onClick={() => {
-                                        handleOrderStatusChange(order.id);
-                                    }}
-                                >
-                                    <TaskAltIcon />
-                                </IconButton>
-                            ) : (
-                                <IconButton
-                                    onClick={() => {
-                                        handleOrderStatusChange(order.id);
-                                    }}
-                                >
-                                    <UnpublishedIcon />
-                                </IconButton>
-                            )}
+                            <IconButton
+                                onClick={() => {
+                                    handleOrderStatusChange(order.id);
+                                }}
+                            >
+                                {!order.status ? <TaskAltIcon /> : <UnpublishedIcon />}
+                            </IconButton>
                         </Grid>
 
                         <Grid item>
