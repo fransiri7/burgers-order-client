@@ -4,8 +4,10 @@ import { Button, Grid, Switch, TextField, Typography } from "@mui/material";
 import moment from "moment/moment";
 import { useAllOrders } from "./utils/apiHooks";
 import { Loading } from "../../components/loading/Loading";
+import { useNavigate } from "react-router-dom";
 
 export function OrdersList() {
+    const navigate = useNavigate();
     const [isPeriod, setIsPeriod] = useState(false);
     const [date, setDate] = useState({
         dateFrom: moment().format("yyyy-MM-DD"),
@@ -72,7 +74,14 @@ export function OrdersList() {
                 </Grid>
                 <Grid item container md={3} justifyContent="flex-end">
                     <Grid item style={{ marginRight: "10%" }}>
-                        <Button variant="outlined">Add Order</Button>
+                        <Button
+                            variant="outlined"
+                            onClick={() => {
+                                navigate("/orders/create");
+                            }}
+                        >
+                            Add Order
+                        </Button>
                     </Grid>
                 </Grid>
             </Grid>

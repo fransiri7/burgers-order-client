@@ -54,15 +54,28 @@ export function OrderCard({ order, setOrders }) {
     };
 
     const handleOrderStatusChange = async id => {
-        await editOrderStatus(id);
-        setOrders(orders =>
-            orders.map(order => {
-                if (order.id === id) {
-                    order.status = !order.status;
-                }
-                return order;
-            })
-        );
+        try {
+            await editOrderStatus(id);
+            setOrders(orders =>
+                orders.map(order => {
+                    if (order.id === id) {
+                        order.status = !order.status;
+                    }
+                    return order;
+                })
+            );
+        } catch (error) {
+            swAlert
+                .fire({
+                    title: "ERROR!",
+                    text: error.message,
+                    icon: "error",
+                    confirmButtonColor: `${red[500]}`
+                })
+                .then(() => {
+                    window.location.reload();
+                });
+        }
     };
     return (
         <Card

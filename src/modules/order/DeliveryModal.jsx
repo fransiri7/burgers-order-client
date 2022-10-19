@@ -5,11 +5,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import { editDelivery } from "./utils/service";
 import swAlert from "sweetalert2";
-import { red } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import { PropTypes } from "prop-types";
 
 export function DeliveryModal({ orderId, setOrders }) {
-    const [deliveryText, setDeliveryText] = useState("");
+    const [deliveryName, setDeliveryName] = useState("");
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -21,16 +21,16 @@ export function DeliveryModal({ orderId, setOrders }) {
 
     const handleDeliveryTextChange = event => {
         event.preventDefault();
-        setDeliveryText(event.target.value);
+        setDeliveryName(event.target.value.charAt(0).toUpperCase() + event.target.value.slice(1));
     };
 
-    const handleEditDelivery = async id => {
+    const handleEditDelivery = async () => {
         try {
-            await editDelivery(id, deliveryText);
+            await editDelivery(orderId, deliveryName);
             setOrders(orders =>
                 orders.map(order => {
-                    if (order.id === id) {
-                        order.deliveredBy = deliveryText;
+                    if (order.id === orderId) {
+                        order.deliveredBy = deliveryName;
                     }
                     return order;
                 })
@@ -51,6 +51,12 @@ export function DeliveryModal({ orderId, setOrders }) {
         }
     };
 
+    const handleKeyDown = event => {
+        if (event.key === "Enter") {
+            handleEditDelivery();
+        }
+    };
+
     return (
         <>
             <IconButton onClick={handleClickOpen}>
@@ -64,7 +70,7 @@ export function DeliveryModal({ orderId, setOrders }) {
                             position: "absolute",
                             right: 0,
                             top: 0,
-                            color: theme => theme.palette.grey[500]
+                            color: grey[500]
                         }}
                     >
                         <CloseIcon />
@@ -81,17 +87,14 @@ export function DeliveryModal({ orderId, setOrders }) {
                             <TextField
                                 label="Delivery"
                                 variant="outlined"
-                                value={deliveryText}
+                                value={deliveryName}
                                 onChange={handleDeliveryTextChange}
+                                onKeyDown={handleKeyDown}
                                 size="small"
                             />
                         </Grid>
                         <Grid item>
-                            <IconButton
-                                onClick={() => {
-                                    handleEditDelivery(orderId);
-                                }}
-                            >
+                            <IconButton onClick={handleEditDelivery}>
                                 <SaveIcon />
                             </IconButton>
                         </Grid>
