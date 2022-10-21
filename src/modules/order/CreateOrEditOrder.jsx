@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Grid, MenuItem, Select, Switch, TextField, Typography } from "@mui/material";
 
-export function CreateOrder() {
+export function CreateOrEditOrder() {
     return (
         <Grid container direction="column" justifyContent="space-around" alignItems="center">
             <Grid item container style={{ width: "83.5%" }}>
