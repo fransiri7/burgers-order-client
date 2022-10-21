@@ -1,7 +1,35 @@
-import React from "react";
+/* eslint-disable */
+import { React, useState } from "react";
 import { Button, Grid, MenuItem, Select, Switch, TextField, Typography } from "@mui/material";
+import { useAllProducts } from "../product/utils/apiHooks";
 
 export function CreateOrEditOrder() {
+    const [produts] = useAllProducts();
+    const [formData, setFormData] = useState({
+        name: "",
+        address: "",
+        notes: "",
+        paymentMethod: "",
+        deliveredBy: "",
+        takeAway: "",
+        totalPrice: "",
+        time: ""
+    });
+    const [errors, setErrors] = useState({});
+
+    const validate = form => {
+        const errors = {};
+        if (!form.name) {
+            errors.name = "Name is required";
+        }
+        if (!form.price) {
+            errors.price = "Price is required";
+        } else if (form.price < 0) {
+            errors.price = "Price must be a number greater than 0";
+        }
+        return errors;
+    };
+
     return (
         <Grid container direction="column" justifyContent="space-around" alignItems="center">
             <Grid item container style={{ width: "83.5%" }}>
