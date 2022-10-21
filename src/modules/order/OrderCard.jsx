@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Divider, Grid, IconButton, Paper, TextField } from "@mui/material";
+import { Card, Divider, Grid, IconButton, Paper } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import UnpublishedIcon from "@mui/icons-material/Unpublished";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
@@ -9,11 +9,74 @@ import MoneyRoundedIcon from "@mui/icons-material/MoneyRounded";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import PriorityHighRoundedIcon from "@mui/icons-material/PriorityHighRounded";
-import SaveIcon from "@mui/icons-material/Save";
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import { PropTypes } from "prop-types";
 import moment from "moment";
+import swAlert from "sweetalert2";
+import { green, red } from "@mui/material/colors";
+import { deleteOrder, editOrderStatus } from "./utils/service";
+import { DeliveryModal } from "./DeliveryModal";
 
-export function OrderCard({ order }) {
+export function OrderCard({ order, setOrders }) {
+    const deleteOrderWithAlert = id => {
+        swAlert
+            .fire({
+                title: `Are you sure you want to delete ${order.name}'s order?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: `${green[500]}`,
+                cancelButtonColor: `${red[500]}`,
+                confirmButtonText: "Delete it!"
+            })
+            .then(async result => {
+                try {
+                    if (result.isConfirmed) {
+                        const msg = await deleteOrder(id);
+                        swAlert.fire({
+                            title: msg,
+                            confirmButtonColor: `${green[500]}`
+                        });
+                        setOrders(orders => orders.filter(order => order.id !== id));
+                    }
+                } catch (error) {
+                    swAlert
+                        .fire({
+                            title: "ERROR!",
+                            text: error.message,
+                            icon: "error",
+                            confirmButtonColor: `${red[500]}`
+                        })
+                        .then(() => {
+                            window.location.reload();
+                        });
+                }
+            });
+    };
+
+    const handleOrderStatusChange = async id => {
+        try {
+            await editOrderStatus(id);
+            setOrders(orders =>
+                orders.map(order => {
+                    if (order.id === id) {
+                        order.status = !order.status;
+                    }
+                    return order;
+                })
+            );
+        } catch (error) {
+            swAlert
+                .fire({
+                    title: "ERROR!",
+                    text: error.message,
+                    icon: "error",
+                    confirmButtonColor: `${red[500]}`
+                })
+                .then(() => {
+                    window.location.reload();
+                });
+        }
+    };
     return (
         <Card
             component={Paper}
@@ -33,19 +96,21 @@ export function OrderCard({ order }) {
                             </IconButton>
                         </Grid>
                         <Grid item>
-                            {!order.status ? (
-                                <IconButton>
-                                    <TaskAltIcon />
-                                </IconButton>
-                            ) : (
-                                <IconButton>
-                                    <UnpublishedIcon />
-                                </IconButton>
-                            )}
+                            <IconButton
+                                onClick={() => {
+                                    handleOrderStatusChange(order.id);
+                                }}
+                            >
+                                {!order.status ? <TaskAltIcon /> : <UnpublishedIcon />}
+                            </IconButton>
                         </Grid>
 
                         <Grid item>
-                            <IconButton>
+                            <IconButton
+                                onClick={() => {
+                                    deleteOrderWithAlert(order.id);
+                                }}
+                            >
                                 <DeleteIcon />
                             </IconButton>
                         </Grid>
@@ -60,20 +125,30 @@ export function OrderCard({ order }) {
                         <Grid item md={7} style={{ paddingLeft: "2%" }}>
                             {order.address}
                         </Grid>
-                        <Grid item container md={5}>
-                            <Grid item md={7}>
-                                <TextField label="deliveredBy" size="small"></TextField>
-                            </Grid>
-                            <Grid item container md={5}>
-                                <Grid item md={6}>
-                                    <IconButton>
-                                        <EditIcon />
+                        <Grid item container md={5} alignItems="center" justifyContent="space-between">
+                            <Grid item container md={10} justifyContent="flex-start" alignItems="center">
+                                <Grid item>
+                                    <IconButton style={{ cursor: "default" }}>
+                                        <DeliveryDiningIcon />
                                     </IconButton>
                                 </Grid>
-                                <Grid item md={6}>
-                                    <IconButton>
-                                        <SaveIcon />
-                                    </IconButton>
+                                <Grid
+                                    item
+                                    style={{
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        width: "65%",
+                                        direction: "ltr"
+                                    }}
+                                >
+                                    {order.deliveredBy}
+                                </Grid>
+                            </Grid>
+
+                            <Grid item container md={2} justifyContent="flex-end">
+                                <Grid item>
+                                    <DeliveryModal orderId={order.id} setOrders={setOrders} />
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -175,5 +250,6 @@ OrderCard.propTypes = {
                 })
             })
         )
-    })
+    }),
+    setOrders: PropTypes.func.isRequired
 };
