@@ -4,16 +4,18 @@ import { Button, Grid, MenuItem, Select, Switch, TextField, Typography } from "@
 import { useAllProducts } from "../product/utils/apiHooks";
 
 export function CreateOrEditOrder() {
-    const [produts] = useAllProducts();
+    const [products] = useAllProducts();
+    console.log(products);
     const [formData, setFormData] = useState({
         name: "",
         address: "",
         notes: "",
-        paymentMethod: "",
-        deliveredBy: "",
-        takeAway: "",
+        paymentMethod: "cash",
+        deliveredBy: false,
+        takeAway: false,
         totalPrice: "",
-        time: ""
+        time: "",
+        products: []
     });
     const [errors, setErrors] = useState({});
 
@@ -22,12 +24,26 @@ export function CreateOrEditOrder() {
         if (!form.name) {
             errors.name = "Name is required";
         }
-        if (!form.price) {
-            errors.price = "Price is required";
-        } else if (form.price < 0) {
-            errors.price = "Price must be a number greater than 0";
+        if (!form.takeAway) {
+            if (!form.addres) {
+                errors.address = "Addres is required";
+            }
         }
         return errors;
+    };
+
+    const handleChange = event => {
+        event.preventDefault();
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value
+        });
+        setErrors(
+            validate({
+                ...formData,
+                [event.target.name]: event.target.value
+            })
+        );
     };
 
     return (
@@ -41,7 +57,7 @@ export function CreateOrEditOrder() {
             </Grid>
             <Grid item container alignItems="center" justifyContent="space-between">
                 <Grid item md={8}>
-                    <TextField label="Name" variant="outlined" fullWidth />
+                    <TextField label="Name" name="name" value={formData.name} variant="outlined" fullWidth onChange={handleChange} />
                 </Grid>
                 <Grid item container md={3}>
                     <Grid item>
@@ -54,7 +70,14 @@ export function CreateOrEditOrder() {
             </Grid>
             <Grid item container alignItems="center" justifyContent="space-between">
                 <Grid item md={8}>
-                    <TextField label="Address" variant="outlined" fullWidth />
+                    <TextField
+                        label="Address"
+                        name="address"
+                        value={formData.address}
+                        variant="outlined"
+                        fullWidth
+                        onChange={handleChange}
+                    />
                 </Grid>
                 <Grid item container md={3}>
                     <Grid item>
@@ -68,7 +91,15 @@ export function CreateOrEditOrder() {
 
             <Grid item container alignItems="center" justifyContent="center">
                 <Grid item md={12}>
-                    <TextField label="Order notes" multiline variant="outlined" fullWidth />
+                    <TextField
+                        label="Order notes"
+                        name="notes"
+                        value={formData.notes}
+                        multiline
+                        variant="outlined"
+                        fullWidth
+                        onChange={handleChange}
+                    />
                 </Grid>
             </Grid>
 
@@ -76,30 +107,24 @@ export function CreateOrEditOrder() {
                 <Grid item container>
                     <Grid item md={8}>
                         <Select style={{ width: "96%" }}>
-                            <MenuItem value={1}>American Burger</MenuItem>
-                            <MenuItem value={2}>Bell Peper Cheese</MenuItem>
-                            <MenuItem value={3}>Blue Cheese Burger</MenuItem>
-                            <MenuItem value={4}>Capresse Burger</MenuItem>
-                            <MenuItem value={5}>Cheese Bacon Burger</MenuItem>
-                            <MenuItem value={6}>Kid Burger</MenuItem>
-                            <MenuItem value={7}>Veggie Burger</MenuItem>
+                            {products.map(elem => {
+                                return (
+                                    <MenuItem key={elem.id} value={elem.id}>
+                                        {elem.name}
+                                    </MenuItem>
+                                );
+                            })}
                         </Select>
                     </Grid>
-                    <Grid item md={1}>
-                        <Select>
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
-                            <MenuItem value={4}>4</MenuItem>
-                            <MenuItem value={5}>5</MenuItem>
-                            <MenuItem value={6}>6</MenuItem>
-                            <MenuItem value={7}>7</MenuItem>
-                            <MenuItem value={8}>8</MenuItem>
-                            <MenuItem value={9}>9</MenuItem>
-                        </Select>
+                    <Grid item container md={1} alignItems="center" justifyContent="center" spacing={1}>
+                        <Grid item>
+                            <TextField label="Burgers" type="number" />
+                        </Grid>
                     </Grid>
-                    <Grid item md={1}>
-                        <TextField label="Subtotal" defaultValue="$ 5000" />
+                    <Grid item container md={1} alignItems="center" justifyContent="center" spacing={1}>
+                        <Grid item>
+                            <TextField label="Subtotal" defaultValue="$ 1500" />
+                        </Grid>
                     </Grid>
                     <Grid item container md={2} alignItems="center" justifyContent="center" spacing={1}>
                         <Grid item>
