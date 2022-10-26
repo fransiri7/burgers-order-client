@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import * as service from "./service";
 
-export const useOrdersBySold = date => {
-    const [orders, setOrders] = useState([]);
+export const useSoldQuantity = date => {
+    const [soldQuantity, setSoldQuantity] = useState([]);
     const [completed, setCompleted] = useState(false);
-    const getOrdersBySold = useCallback(async () => {
+    const getSoldQuantityByMonth = useCallback(async () => {
         try {
-            const burgersByPeriod = await service.getOrdersBySold(date);
-            setOrders(burgersByPeriod);
+            const soldQuantityByPeriod = await service.getSoldQuantityByMonth(date);
+            setSoldQuantity(soldQuantityByPeriod);
         } catch (error) {
             console.log(error);
         } finally {
@@ -16,8 +16,8 @@ export const useOrdersBySold = date => {
     }, [date]);
 
     useEffect(() => {
-        getOrdersBySold();
-    }, [getOrdersBySold]);
+        getSoldQuantityByMonth();
+    }, [getSoldQuantityByMonth]);
 
-    return [orders, completed];
+    return [soldQuantity, completed];
 };
