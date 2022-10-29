@@ -49,6 +49,25 @@ export function CreateOrEditOrder() {
         setFormData(newFormData);
     };
 
+    const addNewProduct = () => {
+        const newFormData = { ...formData };
+        newFormData.products.push({
+            productId: products[0].id,
+            quantity: 1,
+            subtotal: products[0].price,
+            notes: ""
+        });
+        setFormData(newFormData);
+    };
+
+    const deleteProduct = index => {
+        if (formData.products.length > 1) {
+            const newFormData = { ...formData };
+            newFormData.products.splice(index, 1);
+            setFormData(newFormData);
+        }
+    };
+
     return (
         <Grid container direction="column" justifyContent="space-around" alignItems="center">
             <Grid item container style={{ width: "83.5%" }}>
@@ -149,10 +168,14 @@ export function CreateOrEditOrder() {
                             </Grid>
                             <Grid item container md={2} alignItems="center" justifyContent="center" spacing={1}>
                                 <Grid item>
-                                    <Button variant="outlined">+</Button>
+                                    <Button variant="outlined" onClick={addNewProduct}>
+                                        +
+                                    </Button>
                                 </Grid>
                                 <Grid item>
-                                    <Button variant="outlined">-</Button>
+                                    <Button variant="outlined" onClick={() => deleteProduct(index)}>
+                                        -
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </Grid>
