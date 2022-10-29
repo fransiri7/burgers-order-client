@@ -171,7 +171,7 @@ export function OrderCard({ order, setOrders }) {
                                 </Grid>
 
                                 <Grid item md={2}>
-                                    ${product.price}
+                                    ${product.orderProduct.subtotal}
                                 </Grid>
                             </Grid>
 

@@ -3,8 +3,13 @@ import { React, useState } from "react";
 import { Button, Grid, MenuItem, Select, Switch, TextField, Typography } from "@mui/material";
 import { useAllProducts } from "../product/utils/apiHooks";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { createOrder } from "./utils/service";
+import swAlert from "sweetalert2";
+import { red } from "@mui/material/colors";
 
 export function CreateOrEditOrder() {
+    const navigate = useNavigate();
     const [products, _, completed] = useAllProducts();
     const [formData, setFormData] = useState({
         name: "",
@@ -111,6 +116,19 @@ export function CreateOrEditOrder() {
         setFormSubmitted(true);
         const formValidation = validate(formData);
         setErrors(formValidation);
+        if (!Object.keys(formValidation).length) {
+            try {
+                await createOrder(formData);
+                navigate("/orders");
+            } catch (error) {
+                swAlert.fire({
+                    title: "ERROR!",
+                    text: error.message,
+                    icon: "error",
+                    confirmButtonColor: `${red[500]}`
+                });
+            }
+        }
     };
 
     return (
@@ -263,7 +281,13 @@ export function CreateOrEditOrder() {
             <Grid item container alignItems="center" justifyContent="center">
                 <Grid item container md={3} justifyContent="space-around">
                     <Grid item>
-                        <Button variant="outlined" size="large">
+                        <Button
+                            variant="outlined"
+                            size="large"
+                            onClick={() => {
+                                navigate(-1);
+                            }}
+                        >
                             Back
                         </Button>
                     </Grid>
