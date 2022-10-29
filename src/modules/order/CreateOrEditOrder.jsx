@@ -33,13 +33,16 @@ export function CreateOrEditOrder() {
         }
     }, [products]);
 
-    const handleChange = event => {
+    const handleChange = (event, index) => {
         event.preventDefault();
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value
-        });
-        console.log("probando value", formData);
+        const newFormData = { ...formData };
+        if (!(index >= 0)) {
+            newFormData[event.target.name] = event.target.value;
+        } else {
+            const product = newFormData.products[index];
+            product[event.target.name] = event.target.value;
+        }
+        setFormData(newFormData);
     };
 
     return (
@@ -100,12 +103,16 @@ export function CreateOrEditOrder() {
             </Grid>
 
             {formData.products.map((product, index) => {
-                console.log({ product });
                 return (
                     <Grid key={index} item container direction="column" justifyContent="space-around" alignItems="center" spacing={2}>
                         <Grid item container>
                             <Grid item md={8}>
-                                <Select style={{ width: "96%" }} value={product.productId}>
+                                <Select
+                                    style={{ width: "96%" }}
+                                    value={product.productId}
+                                    name="productId"
+                                    onChange={event => handleChange(event, index)}
+                                >
                                     {products.map(elem => {
                                         return (
                                             <MenuItem key={elem.id} value={elem.id}>
@@ -117,12 +124,23 @@ export function CreateOrEditOrder() {
                             </Grid>
                             <Grid item container md={1} alignItems="center" justifyContent="center" spacing={1}>
                                 <Grid item>
-                                    <TextField label="Burgers" type="number" value={product.quantity} />
+                                    <TextField
+                                        label="Burgers"
+                                        type="number"
+                                        value={product.quantity}
+                                        name="quantity"
+                                        onChange={event => handleChange(event, index)}
+                                    />
                                 </Grid>
                             </Grid>
                             <Grid item container md={1} alignItems="center" justifyContent="center" spacing={1}>
                                 <Grid item>
-                                    <TextField label="Subtotal" value={product.subtotal} />
+                                    <TextField
+                                        label="Subtotal"
+                                        value={product.subtotal}
+                                        name="subtotal"
+                                        onChange={event => handleChange(event, index)}
+                                    />
                                 </Grid>
                             </Grid>
                             <Grid item container md={2} alignItems="center" justifyContent="center" spacing={1}>
@@ -136,7 +154,15 @@ export function CreateOrEditOrder() {
                         </Grid>
                         <Grid item container alignItems="center" justifyContent="center">
                             <Grid item md={12}>
-                                <TextField label="Notes product" multiline variant="outlined" fullWidth />
+                                <TextField
+                                    label="Notes product"
+                                    multiline
+                                    variant="outlined"
+                                    fullWidth
+                                    value={product.notes}
+                                    name="notes"
+                                    onChange={event => handleChange(event, index)}
+                                />
                             </Grid>
                         </Grid>
                     </Grid>
