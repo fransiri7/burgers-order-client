@@ -1,8 +1,6 @@
-/* eslint-disable */
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Button, Grid, MenuItem, Select, Switch, TextField, Typography } from "@mui/material";
 import { useAllProducts } from "../product/utils/apiHooks";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createOrder } from "./utils/service";
 import swAlert from "sweetalert2";
@@ -10,7 +8,7 @@ import { red } from "@mui/material/colors";
 
 export function CreateOrEditOrder() {
     const navigate = useNavigate();
-    const [products, _, completed] = useAllProducts();
+    const [products, completed] = useAllProducts();
     const [formData, setFormData] = useState({
         name: "",
         address: "",
@@ -24,7 +22,7 @@ export function CreateOrEditOrder() {
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     useEffect(() => {
-        if (completed && formData.products.length === 0) {
+        if (completed && !formData.products.length) {
             const newFormData = { ...formData };
             newFormData.products.push({
                 productId: products[0].id,
@@ -40,7 +38,8 @@ export function CreateOrEditOrder() {
     const handleChange = (event, index) => {
         event.preventDefault();
         const newFormData = { ...formData };
-        if (!(index >= 0)) {
+        const indexIsNotValid = !(index >= 0);
+        if (indexIsNotValid) {
             newFormData[event.target.name] = event.target.value;
         } else {
             const product = newFormData.products[index];
