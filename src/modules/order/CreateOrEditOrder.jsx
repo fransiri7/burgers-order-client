@@ -11,25 +11,22 @@ export function CreateOrEditOrder() {
         address: "",
         notes: "",
         paymentMethod: "cash",
-        deliveredBy: false,
         takeAway: false,
-        totalPrice: "",
+        totalPrice: 0,
         products: []
     });
 
     useEffect(() => {
-        if (completed) {
-            setFormData({
-                ...formData,
-                products: [
-                    {
-                        productId: products[0].id,
-                        quantity: 1,
-                        subtotal: products[0].price,
-                        notes: ""
-                    }
-                ]
+        if (completed && formData.products.length === 0) {
+            const newFormData = { ...formData };
+            newFormData.products.push({
+                productId: products[0].id,
+                quantity: 1,
+                subtotal: products[0].price,
+                notes: ""
             });
+            newFormData.totalPrice = calculateTotal(newFormData.products);
+            setFormData(newFormData);
         }
     }, [products]);
 
@@ -41,11 +38,12 @@ export function CreateOrEditOrder() {
         } else {
             const product = newFormData.products[index];
             product[event.target.name] = event.target.value;
-            if (event.target.name === "quantity") {
+            if (event.target.name === "quantity" || event.target.name === "productId") {
                 const price = products.find(productToFind => productToFind.id === product.productId).price;
                 product.subtotal = product.quantity * price;
             }
         }
+        newFormData.totalPrice = calculateTotal(newFormData.products);
         setFormData(newFormData);
     };
 
@@ -57,6 +55,7 @@ export function CreateOrEditOrder() {
             subtotal: products[0].price,
             notes: ""
         });
+        newFormData.totalPrice = calculateTotal(newFormData.products);
         setFormData(newFormData);
     };
 
@@ -64,8 +63,31 @@ export function CreateOrEditOrder() {
         if (formData.products.length > 1) {
             const newFormData = { ...formData };
             newFormData.products.splice(index, 1);
+            newFormData.totalPrice = calculateTotal(newFormData.products);
             setFormData(newFormData);
         }
+    };
+
+    const calculateTotal = products => {
+        let totalPrice = 0;
+        products.forEach(product => {
+            totalPrice += parseInt(product.subtotal);
+        });
+        return totalPrice;
+    };
+
+    const handleSwitchChange = event => {
+        event.preventDefault();
+        const newFormData = { ...formData };
+        if (event.target.name === "paymentMethod") {
+            newFormData.paymentMethod = event.target.checked ? "cash" : "transfer";
+        } else if (event.target.name === "takeAway") {
+            newFormData.takeAway = event.target.checked;
+            if (newFormData.takeAway) {
+                newFormData.address = "";
+            }
+        }
+        setFormData(newFormData);
     };
 
     return (
@@ -86,7 +108,7 @@ export function CreateOrEditOrder() {
                         <Typography variant="h6">Cash</Typography>
                     </Grid>
                     <Grid item>
-                        <Switch />
+                        <Switch name="paymentMethod" checked={formData.paymentMethod === "cash"} onChange={handleSwitchChange} />
                     </Grid>
                 </Grid>
             </Grid>
@@ -99,6 +121,7 @@ export function CreateOrEditOrder() {
                         variant="outlined"
                         fullWidth
                         onChange={handleChange}
+                        disabled={formData.takeAway}
                     />
                 </Grid>
                 <Grid item container md={3}>
@@ -106,7 +129,7 @@ export function CreateOrEditOrder() {
                         <Typography variant="h6">Take Away</Typography>
                     </Grid>
                     <Grid item>
-                        <Switch />
+                        <Switch name="takeAway" checked={formData.takeAway} onChange={handleSwitchChange} />
                     </Grid>
                 </Grid>
             </Grid>
@@ -198,7 +221,9 @@ export function CreateOrEditOrder() {
 
             <Grid item container alignItems="center" justifyContent="center">
                 <Grid item>
-                    <TextField label="Total" defaultValue="$ 5000" />
+                    <Typography variant="h4" fontWeight="bold" color="primary">
+                        Total ${formData.totalPrice}
+                    </Typography>
                 </Grid>
             </Grid>
             <Grid item container alignItems="center" justifyContent="center">
