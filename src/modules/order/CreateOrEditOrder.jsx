@@ -41,6 +41,10 @@ export function CreateOrEditOrder() {
         } else {
             const product = newFormData.products[index];
             product[event.target.name] = event.target.value;
+            if (event.target.name === "quantity") {
+                const price = products.find(productToFind => productToFind.id === product.productId).price;
+                product.subtotal = product.quantity * price;
+            }
         }
         setFormData(newFormData);
     };
