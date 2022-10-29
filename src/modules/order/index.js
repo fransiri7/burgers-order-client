@@ -1,3 +1,4 @@
 import { OrdersList } from "./OrdersList";
+import { CreateOrEditOrder } from "./CreateOrEditOrder";
 
-export { OrdersList };
+export { OrdersList, CreateOrEditOrder };

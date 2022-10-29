@@ -25,7 +25,7 @@ import swAlert from "sweetalert2";
 import { ProductDetailModal } from "./ProductDetailModal";
 
 export function ProductsList() {
-    const [products, setProducts, getProductsCompleted] = useAllProducts();
+    const [products, getProductsCompleted, setProducts] = useAllProducts();
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState("");
 

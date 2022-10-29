@@ -6,7 +6,8 @@ const URLS = {
     GET_ORDERS: (dateFrom, dateTo) => `${baseURL}/order?dateFrom=${dateFrom}&dateTo=${dateTo}`,
     DELETE_ORDER: id => `${baseURL}/order/${id}`,
     EDIT_DELIVERY: id => `${baseURL}/order/delivery/${id}`,
-    EDIT_ORDER_STATUS: id => `${baseURL}/order/status/${id}`
+    EDIT_ORDER_STATUS: id => `${baseURL}/order/status/${id}`,
+    CREATE_ORDER: `${baseURL}/order`
 };
 
 export const getOrders = async (dateFrom, dateTo) => {
@@ -38,6 +39,15 @@ export const editDelivery = async (id, deliveredBy) => {
 
 export const editOrderStatus = async id => {
     const response = await axios.put(URLS.EDIT_ORDER_STATUS(id));
+    if (response.data.success) {
+        return response.data.msg;
+    } else {
+        throw new Error(response.data.msg);
+    }
+};
+
+export const createOrder = async order => {
+    const response = await axios.post(URLS.CREATE_ORDER, order);
     if (response.data.success) {
         return response.data.msg;
     } else {

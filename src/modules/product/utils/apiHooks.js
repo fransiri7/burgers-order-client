@@ -44,5 +44,5 @@ export const useAllProducts = () => {
         getAllProducts();
     }, [getAllProducts]);
 
-    return [products, setProducts, completed];
+    return [products, completed, setProducts];
 };
