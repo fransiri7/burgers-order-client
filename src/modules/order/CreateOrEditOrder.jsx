@@ -15,6 +15,8 @@ export function CreateOrEditOrder() {
         totalPrice: 0,
         products: []
     });
+    const [errors, setErrors] = useState({});
+    const [formSubmitted, setFormSubmitted] = useState(false);
 
     useEffect(() => {
         if (completed && formData.products.length === 0) {
@@ -45,6 +47,10 @@ export function CreateOrEditOrder() {
         }
         newFormData.totalPrice = calculateTotal(newFormData.products);
         setFormData(newFormData);
+        if (formSubmitted) {
+            const formValidation = validate(formData);
+            setErrors(formValidation);
+        }
     };
 
     const addNewProduct = () => {
@@ -90,6 +96,23 @@ export function CreateOrEditOrder() {
         setFormData(newFormData);
     };
 
+    const validate = form => {
+        const errors = {};
+        if (!form.name) {
+            errors.name = "Name is required";
+        }
+        if (!form.takeAway && !form.address) {
+            errors.address = "Address is required";
+        }
+        return errors;
+    };
+
+    const handleSubmit = async () => {
+        setFormSubmitted(true);
+        const formValidation = validate(formData);
+        setErrors(formValidation);
+    };
+
     return (
         <Grid container direction="column" justifyContent="space-around" alignItems="center">
             <Grid item container style={{ width: "83.5%" }}>
@@ -101,7 +124,16 @@ export function CreateOrEditOrder() {
             </Grid>
             <Grid item container alignItems="center" justifyContent="space-between">
                 <Grid item md={8}>
-                    <TextField label="Name" name="name" value={formData.name} variant="outlined" fullWidth onChange={handleChange} />
+                    <TextField
+                        label="Name"
+                        name="name"
+                        value={formData.name}
+                        variant="outlined"
+                        fullWidth
+                        onChange={handleChange}
+                        error={!!errors.name}
+                        helperText={errors.name}
+                    />
                 </Grid>
                 <Grid item container md={3}>
                     <Grid item>
@@ -122,6 +154,8 @@ export function CreateOrEditOrder() {
                         fullWidth
                         onChange={handleChange}
                         disabled={formData.takeAway}
+                        error={!!errors.address}
+                        helperText={errors.address}
                     />
                 </Grid>
                 <Grid item container md={3}>
@@ -234,7 +268,7 @@ export function CreateOrEditOrder() {
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Button variant="outlined" size="large">
+                        <Button variant="outlined" size="large" onClick={handleSubmit}>
                             Add
                         </Button>
                     </Grid>
