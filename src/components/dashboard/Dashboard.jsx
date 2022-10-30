@@ -105,7 +105,7 @@ export function Dashboard() {
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                <div style={{ height: "80vh", width: "100%", display: "flex", justifyContent: "center" }}>
+                <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/products" element={<ProductsList />} />

@@ -40,7 +40,7 @@ export function Home() {
     };
 
     return (
-        <Grid container direction="column" justifyContent="space-between" style={{ width: "65%" }}>
+        <Grid container direction="column" justifyContent="space-between" style={{ width: "65%", height: "80vh" }}>
             <Grid item container alignItems="center" style={{ height: "10%" }}>
                 <Grid item>
                     <TextField
