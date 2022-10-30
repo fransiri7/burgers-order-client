@@ -36,7 +36,6 @@ export function CreateOrEditOrder() {
     }, [products]);
 
     const handleChange = (event, index) => {
-        event.preventDefault();
         const newFormData = { ...formData };
         const indexIsNotValid = !(index >= 0);
         if (indexIsNotValid) {
@@ -87,7 +86,6 @@ export function CreateOrEditOrder() {
     };
 
     const handleSwitchChange = event => {
-        event.preventDefault();
         const newFormData = { ...formData };
         if (event.target.name === "paymentMethod") {
             newFormData.paymentMethod = event.target.checked ? "cash" : "transfer";
@@ -131,8 +129,8 @@ export function CreateOrEditOrder() {
     };
 
     return (
-        <Grid container direction="column" justifyContent="space-around" alignItems="center">
-            <Grid item container style={{ width: "83.5%" }}>
+        <Grid container direction="column" spacing={2} alignItems="center">
+            <Grid item container>
                 <Grid item>
                     <Typography variant="h5" fontWeight="bold">
                         Create Order
@@ -202,8 +200,8 @@ export function CreateOrEditOrder() {
             {formData.products.map((product, index) => {
                 return (
                     <Grid key={index} item container direction="column" justifyContent="space-around" alignItems="center" spacing={2}>
-                        <Grid item container>
-                            <Grid item md={8}>
+                        <Grid item container justifyContent="space-between">
+                            <Grid item md={6}>
                                 <Select
                                     style={{ width: "96%" }}
                                     value={product.productId}
@@ -219,19 +217,17 @@ export function CreateOrEditOrder() {
                                     })}
                                 </Select>
                             </Grid>
-                            <Grid item container md={1} alignItems="center" justifyContent="center" spacing={1}>
-                                <Grid item>
+                            <Grid item container md={3} justifyContent="center">
+                                <Grid item md={5} style={{ marginRight: "2%" }} >
                                     <TextField
-                                        label="Burgers"
+                                        label="Quantity"
                                         type="number"
                                         value={product.quantity}
                                         name="quantity"
                                         onChange={event => handleChange(event, index)}
                                     />
                                 </Grid>
-                            </Grid>
-                            <Grid item container md={1} alignItems="center" justifyContent="center" spacing={1}>
-                                <Grid item>
+                                <Grid item md={5} style={{ marginLeft: "2%" }} >
                                     <TextField
                                         label="Subtotal"
                                         value={product.subtotal}
@@ -240,9 +236,9 @@ export function CreateOrEditOrder() {
                                     />
                                 </Grid>
                             </Grid>
-                            <Grid item container md={2} alignItems="center" justifyContent="center" spacing={1}>
+                            <Grid item container md={3} alignItems="center" justifyContent="flex-end">
                                 <Grid item>
-                                    <Button variant="outlined" onClick={addNewProduct}>
+                                    <Button variant="outlined" onClick={addNewProduct} style={{ marginRight: "10px" }}>
                                         +
                                     </Button>
                                 </Grid>
