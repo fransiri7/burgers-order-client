@@ -47,9 +47,9 @@ export function Home() {
                         label="Sales for months"
                         type="month"
                         value={date}
-                        onChange={event => {
-                            event.preventDefault();
-                            setDate(event.target.value);
+                        onChange={e => {
+                            e.preventDefault();
+                            setDate(e.target.value);
                         }}
                     />
                 </Grid>

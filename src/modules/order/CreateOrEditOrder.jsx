@@ -35,15 +35,15 @@ export function CreateOrEditOrder() {
         }
     }, [products]);
 
-    const handleChange = (event, index) => {
+    const handleChange = (e, index) => {
         const newFormData = { ...formData };
         const indexIsNotValid = !(index >= 0);
         if (indexIsNotValid) {
-            newFormData[event.target.name] = event.target.value;
+            newFormData[e.target.name] = e.target.value;
         } else {
             const product = newFormData.products[index];
-            product[event.target.name] = event.target.value;
-            if (event.target.name === "quantity" || event.target.name === "productId") {
+            product[e.target.name] = e.target.value;
+            if (e.target.name === "quantity" || e.target.name === "productId") {
                 const price = products.find(productToFind => productToFind.id === product.productId).price;
                 product.subtotal = product.quantity * price;
             }
@@ -85,12 +85,12 @@ export function CreateOrEditOrder() {
         return totalPrice;
     };
 
-    const handleSwitchChange = event => {
+    const handleSwitchChange = e => {
         const newFormData = { ...formData };
-        if (event.target.name === "paymentMethod") {
-            newFormData.paymentMethod = event.target.checked ? "cash" : "transfer";
-        } else if (event.target.name === "takeAway") {
-            newFormData.takeAway = event.target.checked;
+        if (e.target.name === "paymentMethod") {
+            newFormData.paymentMethod = e.target.checked ? "cash" : "transfer";
+        } else if (e.target.name === "takeAway") {
+            newFormData.takeAway = e.target.checked;
             if (newFormData.takeAway) {
                 newFormData.address = "";
             }
@@ -206,7 +206,7 @@ export function CreateOrEditOrder() {
                                     style={{ width: "96%" }}
                                     value={product.productId}
                                     name="productId"
-                                    onChange={event => handleChange(event, index)}
+                                    onChange={e => handleChange(e, index)}
                                 >
                                     {products.map(elem => {
                                         return (
@@ -218,21 +218,21 @@ export function CreateOrEditOrder() {
                                 </Select>
                             </Grid>
                             <Grid item container md={3} justifyContent="center">
-                                <Grid item md={5} style={{ marginRight: "2%" }} >
+                                <Grid item md={5} style={{ marginRight: "2%" }}>
                                     <TextField
                                         label="Quantity"
                                         type="number"
                                         value={product.quantity}
                                         name="quantity"
-                                        onChange={event => handleChange(event, index)}
+                                        onChange={e => handleChange(e, index)}
                                     />
                                 </Grid>
-                                <Grid item md={5} style={{ marginLeft: "2%" }} >
+                                <Grid item md={5} style={{ marginLeft: "2%" }}>
                                     <TextField
                                         label="Subtotal"
                                         value={product.subtotal}
                                         name="subtotal"
-                                        onChange={event => handleChange(event, index)}
+                                        onChange={e => handleChange(e, index)}
                                     />
                                 </Grid>
                             </Grid>
@@ -258,7 +258,7 @@ export function CreateOrEditOrder() {
                                     fullWidth
                                     value={product.notes}
                                     name="notes"
-                                    onChange={event => handleChange(event, index)}
+                                    onChange={e => handleChange(e, index)}
                                 />
                             </Grid>
                         </Grid>
