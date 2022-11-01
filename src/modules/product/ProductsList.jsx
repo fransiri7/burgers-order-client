@@ -30,7 +30,6 @@ export function ProductsList() {
     const [searchText, setSearchText] = useState("");
 
     const handleSearchTextChange = e => {
-        e.preventDefault();
         setSearchText(e.target.value);
     };
 

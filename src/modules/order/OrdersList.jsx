@@ -32,7 +32,6 @@ export function OrdersList() {
     const [orders, setOrders, getOrderCompleted] = useAllOrders(date.dateFrom, date.dateTo);
 
     const handleDatePickerChange = e => {
-        e.preventDefault();
         setDate({ ...date, [e.target.name]: e.target.value });
     };
 

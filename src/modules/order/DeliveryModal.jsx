@@ -20,7 +20,6 @@ export function DeliveryModal({ orderId, setOrders }) {
     };
 
     const handleDeliveryTextChange = e => {
-        e.preventDefault();
         setDeliveryName(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1));
     };
 

@@ -58,7 +58,6 @@ export function CreateOrEditProduct() {
     };
 
     const handleChange = e => {
-        e.preventDefault();
         setFormData({
             ...formData,
             [e.target.name]: e.target.value

@@ -48,7 +48,6 @@ export function Home() {
                         type="month"
                         value={date}
                         onChange={e => {
-                            e.preventDefault();
                             setDate(e.target.value);
                         }}
                     />
