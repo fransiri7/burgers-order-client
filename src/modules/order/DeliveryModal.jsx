@@ -19,9 +19,8 @@ export function DeliveryModal({ orderId, setOrders }) {
         setOpen(false);
     };
 
-    const handleDeliveryTextChange = event => {
-        event.preventDefault();
-        setDeliveryName(event.target.value.charAt(0).toUpperCase() + event.target.value.slice(1));
+    const handleDeliveryTextChange = e => {
+        setDeliveryName(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1));
     };
 
     const handleEditDelivery = async () => {
@@ -51,8 +50,8 @@ export function DeliveryModal({ orderId, setOrders }) {
         }
     };
 
-    const handleKeyDown = event => {
-        if (event.key === "Enter") {
+    const handleKeyDown = e => {
+        if (e.key === "Enter") {
             handleEditDelivery();
         }
     };

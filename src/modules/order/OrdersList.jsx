@@ -31,9 +31,8 @@ export function OrdersList() {
     });
     const [orders, setOrders, getOrderCompleted] = useAllOrders(date.dateFrom, date.dateTo);
 
-    const handleDatePickerChange = event => {
-        event.preventDefault();
-        setDate({ ...date, [event.target.name]: event.target.value });
+    const handleDatePickerChange = e => {
+        setDate({ ...date, [e.target.name]: e.target.value });
     };
 
     if (!getOrderCompleted) {
@@ -51,9 +50,9 @@ export function OrdersList() {
                         <Grid item>
                             <Switch
                                 checked={isPeriod}
-                                onChange={event => {
-                                    setIsPeriod(event.target.checked);
-                                    if (event.target.checked) {
+                                onChange={e => {
+                                    setIsPeriod(e.target.checked);
+                                    if (e.target.checked) {
                                         setDate({ ...date, dateTo: moment().format("yyyy-MM-DD") });
                                     } else {
                                         setDate({ ...date, dateTo: null });

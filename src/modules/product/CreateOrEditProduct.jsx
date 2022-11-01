@@ -57,17 +57,16 @@ export function CreateOrEditProduct() {
         return errors;
     };
 
-    const handleChange = event => {
-        event.preventDefault();
+    const handleChange = e => {
         setFormData({
             ...formData,
-            [event.target.name]: event.target.value
+            [e.target.name]: e.target.value
         });
         if (formSubmitted) {
             setErrors(
                 validate({
                     ...formData,
-                    [event.target.name]: event.target.value
+                    [e.target.name]: e.target.value
                 })
             );
         }

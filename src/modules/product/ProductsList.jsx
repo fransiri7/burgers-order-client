@@ -29,9 +29,8 @@ export function ProductsList() {
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState("");
 
-    const handleSearchTextChange = event => {
-        event.preventDefault();
-        setSearchText(event.target.value);
+    const handleSearchTextChange = e => {
+        setSearchText(e.target.value);
     };
 
     const filterProducts = (productsToFilter, searchText) => {
