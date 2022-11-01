@@ -33,3 +33,26 @@ export const useAllOrders = (dateFrom, dateTo) => {
 
     return [orders, setOrders, completed];
 };
+
+export const useOrderById = id => {
+    const [order, setOrder] = useState(null);
+    const [completed, setCompleted] = useState(false);
+    const getOrder = useCallback(async () => {
+        try {
+            if (id) {
+                const order = await service.getOrderById(id);
+                setOrder(order);
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setCompleted(true);
+        }
+    }, [id]);
+
+    useEffect(() => {
+        getOrder();
+    }, [getOrder]);
+
+    return [order, completed];
+};
