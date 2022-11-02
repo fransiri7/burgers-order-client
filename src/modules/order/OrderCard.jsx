@@ -16,8 +16,10 @@ import swAlert from "sweetalert2";
 import { green, red } from "@mui/material/colors";
 import { deleteOrder, editOrderStatus } from "./utils/service";
 import { DeliveryModal } from "./DeliveryModal";
+import { useNavigate } from "react-router-dom";
 
 export function OrderCard({ order, setOrders }) {
+    const navigate = useNavigate();
     const deleteOrderWithAlert = id => {
         swAlert
             .fire({
@@ -91,7 +93,11 @@ export function OrderCard({ order, setOrders }) {
 
                     <Grid item container md={5} justifyContent="flex-end">
                         <Grid item>
-                            <IconButton>
+                            <IconButton
+                                onClick={() => {
+                                    navigate(`/orders/edit/${order.id}`);
+                                }}
+                            >
                                 <EditIcon />
                             </IconButton>
                         </Grid>

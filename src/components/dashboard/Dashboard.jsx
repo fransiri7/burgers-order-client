@@ -113,6 +113,7 @@ export function Dashboard() {
                         <Route path="/orders/create" element={<CreateOrEditOrder />} />
                         <Route path="/products/create" element={<CreateOrEditProduct />} />
                         <Route path="/products/edit/:id" element={<CreateOrEditProduct />} />
+                        <Route path="/orders/edit/:id" element={<CreateOrEditOrder />} />
                     </Routes>
                 </div>
             </Main>

@@ -1,14 +1,17 @@
 import { React, useState, useEffect } from "react";
 import { Button, Grid, MenuItem, Select, Switch, TextField, Typography } from "@mui/material";
 import { useAllProducts } from "../product/utils/apiHooks";
-import { useNavigate } from "react-router-dom";
-import { createOrder } from "./utils/service";
+import { useNavigate, useParams } from "react-router-dom";
+import { createOrder, editOrder } from "./utils/service";
 import swAlert from "sweetalert2";
 import { red } from "@mui/material/colors";
+import { useOrderById } from "./utils/apiHooks";
 
 export function CreateOrEditOrder() {
+    const { id } = useParams();
     const navigate = useNavigate();
-    const [products, completed] = useAllProducts();
+    const [order, getOrderCompleted] = useOrderById(id);
+    const [products, getProductsCompleted] = useAllProducts();
     const [formData, setFormData] = useState({
         name: "",
         address: "",
@@ -22,18 +25,24 @@ export function CreateOrEditOrder() {
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     useEffect(() => {
-        if (completed && !formData.products.length) {
-            const newFormData = { ...formData };
-            newFormData.products.push({
-                productId: products[0].id,
-                quantity: 1,
-                subtotal: products[0].price,
-                notes: ""
-            });
-            newFormData.totalPrice = calculateTotal(newFormData.products);
-            setFormData(newFormData);
+        if (getProductsCompleted) {
+            if (getOrderCompleted && order) {
+                setFormData(order);
+            } else {
+                const newFormData = { ...formData };
+                newFormData.products = [
+                    {
+                        productId: products[0].id,
+                        quantity: 1,
+                        subtotal: products[0].price,
+                        notes: ""
+                    }
+                ];
+                newFormData.totalPrice = calculateTotal(newFormData.products);
+                setFormData(newFormData);
+            }
         }
-    }, [products]);
+    }, [getProductsCompleted, getOrderCompleted]);
 
     const handleChange = (e, index) => {
         const newFormData = { ...formData };
@@ -115,7 +124,11 @@ export function CreateOrEditOrder() {
         setErrors(formValidation);
         if (!Object.keys(formValidation).length) {
             try {
-                await createOrder(formData);
+                if (order) {
+                    await editOrder(formData, id);
+                } else {
+                    await createOrder(formData);
+                }
                 navigate("/orders");
             } catch (error) {
                 swAlert.fire({
@@ -133,7 +146,7 @@ export function CreateOrEditOrder() {
             <Grid item container>
                 <Grid item>
                     <Typography variant="h5" fontWeight="bold">
-                        Create Order
+                        {order ? "Edit Order" : "Create Order"}
                     </Typography>
                 </Grid>
             </Grid>
@@ -288,7 +301,7 @@ export function CreateOrEditOrder() {
                     </Grid>
                     <Grid item>
                         <Button variant="outlined" size="large" onClick={handleSubmit}>
-                            Add
+                            {order ? "Edit" : "Add"}
                         </Button>
                     </Grid>
                 </Grid>
