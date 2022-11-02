@@ -25,17 +25,19 @@ export function CreateOrEditOrder() {
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     useEffect(() => {
-        if (getProductsCompleted && !formData.products.length) {
+        if (getProductsCompleted) {
             if (getOrderCompleted && order) {
                 setFormData(order);
             } else {
                 const newFormData = { ...formData };
-                newFormData.products.push({
-                    productId: products[0].id,
-                    quantity: 1,
-                    subtotal: products[0].price,
-                    notes: ""
-                });
+                newFormData.products = [
+                    {
+                        productId: products[0].id,
+                        quantity: 1,
+                        subtotal: products[0].price,
+                        notes: ""
+                    }
+                ];
                 newFormData.totalPrice = calculateTotal(newFormData.products);
                 setFormData(newFormData);
             }
