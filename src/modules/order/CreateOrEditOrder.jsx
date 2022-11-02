@@ -6,6 +6,7 @@ import { createOrder, editOrder } from "./utils/service";
 import swAlert from "sweetalert2";
 import { red } from "@mui/material/colors";
 import { useOrderById } from "./utils/apiHooks";
+import { formatName } from "../../utils/utils";
 
 export function CreateOrEditOrder() {
     const { id } = useParams();
@@ -124,10 +125,14 @@ export function CreateOrEditOrder() {
         setErrors(formValidation);
         if (!Object.keys(formValidation).length) {
             try {
+                const body = {
+                    ...formData,
+                    name: formatName(formData.name)
+                };
                 if (order) {
-                    await editOrder(formData, id);
+                    await editOrder(body, id);
                 } else {
-                    await createOrder(formData);
+                    await createOrder(body);
                 }
                 navigate("/orders");
             } catch (error) {

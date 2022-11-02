@@ -8,6 +8,7 @@ import { createProduct, editProduct } from "./utils/service";
 import swAlert from "sweetalert2";
 import { useProductById } from "./utils/apiHooks";
 import { Loading } from "../../components/loading/Loading";
+import { formatName } from "../../utils/utils";
 
 const theme = createTheme({
     palette: {
@@ -36,13 +37,6 @@ export function CreateOrEditProduct() {
     });
     const [errors, setErrors] = useState({});
     const [formSubmitted, setFormSubmitted] = useState(false);
-
-    const formatName = name =>
-        name
-            .trim()
-            .split(" ")
-            .map(character => character[0].toUpperCase() + character.slice(1))
-            .join(" ");
 
     const validate = form => {
         const errors = {};
