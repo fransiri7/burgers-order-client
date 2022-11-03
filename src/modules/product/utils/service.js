@@ -6,13 +6,7 @@ const URLS = {
     CREATE_PRODUCT: `${baseURL}/product`,
     GET_PRODUCT_BY_ID: id => `${baseURL}/product/${id}`,
     EDIT_PRODUCT: id => `${baseURL}/product/${id}`,
-    GET_PRODUCTS: status => {
-        if (status) {
-            return `${baseURL}/product?status=${status}`;
-        } else {
-            return `${baseURL}/product`;
-        }
-    },
+    GET_PRODUCTS: status => `${baseURL}/product` + (status !== undefined ? `?status=${status}` : ""),
     EDIT_PRODUCT_STATUS: id => `${baseURL}/product/status/${id}`
 };
 

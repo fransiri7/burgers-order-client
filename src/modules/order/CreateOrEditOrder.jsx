@@ -45,7 +45,7 @@ export function CreateOrEditOrder() {
                 } else {
                     swAlert
                         .fire({
-                            title: "anda a crear productos bobo",
+                            title: "Create products before creating orders.",
                             icon: "error",
                             confirmButtonColor: `${red[500]}`,
                             confirmButtonText: "Ok"
