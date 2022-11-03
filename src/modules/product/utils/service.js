@@ -6,12 +6,18 @@ const URLS = {
     CREATE_PRODUCT: `${baseURL}/product`,
     GET_PRODUCT_BY_ID: id => `${baseURL}/product/${id}`,
     EDIT_PRODUCT: id => `${baseURL}/product/${id}`,
-    GET_PRODUCTS: `${baseURL}/product`,
+    GET_PRODUCTS: status => {
+        if (status) {
+            return `${baseURL}/product?status=${status}`;
+        } else {
+            return `${baseURL}/product`;
+        }
+    },
     EDIT_PRODUCT_STATUS: id => `${baseURL}/product/status/${id}`
 };
 
-export const getProducts = async () => {
-    const response = await axios.get(URLS.GET_PRODUCTS);
+export const getProducts = async status => {
+    const response = await axios.get(URLS.GET_PRODUCTS(status));
     return response.data;
 };
 

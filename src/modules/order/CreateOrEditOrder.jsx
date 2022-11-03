@@ -12,7 +12,7 @@ export function CreateOrEditOrder() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [order, getOrderCompleted] = useOrderById(id);
-    const [products, getProductsCompleted] = useAllProducts();
+    const [products, getProductsCompleted] = useAllProducts(true);
     const [formData, setFormData] = useState({
         name: "",
         address: "",
@@ -30,17 +30,30 @@ export function CreateOrEditOrder() {
             if (getOrderCompleted && order) {
                 setFormData(order);
             } else {
-                const newFormData = { ...formData };
-                newFormData.products = [
-                    {
-                        productId: products[0].id,
-                        quantity: 1,
-                        subtotal: products[0].price,
-                        notes: ""
-                    }
-                ];
-                newFormData.totalPrice = calculateTotal(newFormData.products);
-                setFormData(newFormData);
+                if (products.length) {
+                    const newFormData = { ...formData };
+                    newFormData.products = [
+                        {
+                            productId: products[0].id,
+                            quantity: 1,
+                            subtotal: products[0].price,
+                            notes: ""
+                        }
+                    ];
+                    newFormData.totalPrice = calculateTotal(newFormData.products);
+                    setFormData(newFormData);
+                } else {
+                    swAlert
+                        .fire({
+                            title: "anda a crear productos bobo",
+                            icon: "error",
+                            confirmButtonColor: `${red[500]}`,
+                            confirmButtonText: "Ok"
+                        })
+                        .then(() => {
+                            navigate("/products");
+                        });
+                }
             }
         }
     }, [getProductsCompleted, getOrderCompleted]);
@@ -227,10 +240,10 @@ export function CreateOrEditOrder() {
                                     name="productId"
                                     onChange={e => handleChange(e, index)}
                                 >
-                                    {products.map(elem => {
+                                    {products.map(product => {
                                         return (
-                                            <MenuItem key={elem.id} value={elem.id}>
-                                                {elem.name}
+                                            <MenuItem key={product.id} value={product.id}>
+                                                {product.name}
                                             </MenuItem>
                                         );
                                     })}
