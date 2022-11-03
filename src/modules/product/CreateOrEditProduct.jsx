@@ -8,7 +8,7 @@ import { createProduct, editProduct } from "./utils/service";
 import swAlert from "sweetalert2";
 import { useProductById } from "./utils/apiHooks";
 import { Loading } from "../../components/loading/Loading";
-import { formatName } from "../../utils/utils";
+import { formatText } from "../../utils/utils";
 
 const theme = createTheme({
     palette: {
@@ -74,7 +74,7 @@ export function CreateOrEditProduct() {
             try {
                 const body = {
                     ...formData,
-                    name: formatName(formData.name)
+                    name: formatText(formData.name)
                 };
                 let msg;
                 if (!product) {

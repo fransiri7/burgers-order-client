@@ -6,7 +6,7 @@ import { createOrder, editOrder } from "./utils/service";
 import swAlert from "sweetalert2";
 import { red } from "@mui/material/colors";
 import { useOrderById } from "./utils/apiHooks";
-import { formatName } from "../../utils/utils";
+import { formatText } from "../../utils/utils";
 
 export function CreateOrEditOrder() {
     const { id } = useParams();
@@ -127,7 +127,8 @@ export function CreateOrEditOrder() {
             try {
                 const body = {
                     ...formData,
-                    name: formatName(formData.name)
+                    name: formatText(formData.name),
+                    address: formatText(formData.address)
                 };
                 if (order) {
                     await editOrder(body, id);
