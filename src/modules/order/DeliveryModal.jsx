@@ -7,6 +7,7 @@ import { editDelivery } from "./utils/service";
 import swAlert from "sweetalert2";
 import { grey, red } from "@mui/material/colors";
 import { PropTypes } from "prop-types";
+import { formatText } from "../../utils/utils";
 
 export function DeliveryModal({ orderId, setOrders }) {
     const [deliveryName, setDeliveryName] = useState("");
@@ -20,16 +21,17 @@ export function DeliveryModal({ orderId, setOrders }) {
     };
 
     const handleDeliveryTextChange = e => {
-        setDeliveryName(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1));
+        setDeliveryName(e.target.value);
     };
 
     const handleEditDelivery = async () => {
         try {
-            await editDelivery(orderId, deliveryName);
+            const newDeliveryName = formatText(deliveryName);
+            await editDelivery(orderId, newDeliveryName);
             setOrders(orders =>
                 orders.map(order => {
                     if (order.id === orderId) {
-                        order.deliveredBy = deliveryName;
+                        order.deliveredBy = newDeliveryName;
                     }
                     return order;
                 })

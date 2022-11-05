@@ -25,13 +25,13 @@ export const useProductById = id => {
     return [product, completed];
 };
 
-export const useAllProducts = () => {
+export const useAllProducts = status => {
     const [products, setProducts] = useState([]);
     const [completed, setCompleted] = useState(false);
 
     const getAllProducts = useCallback(async () => {
         try {
-            const products = await service.getProducts();
+            const products = await service.getProducts(status);
             setProducts(products);
         } catch (error) {
             console.log(error);

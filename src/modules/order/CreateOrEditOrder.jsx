@@ -6,12 +6,13 @@ import { createOrder, editOrder } from "./utils/service";
 import swAlert from "sweetalert2";
 import { red } from "@mui/material/colors";
 import { useOrderById } from "./utils/apiHooks";
+import { formatText } from "../../utils/utils";
 
 export function CreateOrEditOrder() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [order, getOrderCompleted] = useOrderById(id);
-    const [products, getProductsCompleted] = useAllProducts();
+    const [products, getProductsCompleted] = useAllProducts(true);
     const [formData, setFormData] = useState({
         name: "",
         address: "",
@@ -29,17 +30,30 @@ export function CreateOrEditOrder() {
             if (getOrderCompleted && order) {
                 setFormData(order);
             } else {
-                const newFormData = { ...formData };
-                newFormData.products = [
-                    {
-                        productId: products[0].id,
-                        quantity: 1,
-                        subtotal: products[0].price,
-                        notes: ""
-                    }
-                ];
-                newFormData.totalPrice = calculateTotal(newFormData.products);
-                setFormData(newFormData);
+                if (products.length) {
+                    const newFormData = { ...formData };
+                    newFormData.products = [
+                        {
+                            productId: products[0].id,
+                            quantity: 1,
+                            subtotal: products[0].price,
+                            notes: ""
+                        }
+                    ];
+                    newFormData.totalPrice = calculateTotal(newFormData.products);
+                    setFormData(newFormData);
+                } else {
+                    swAlert
+                        .fire({
+                            title: "Create products before creating orders.",
+                            icon: "error",
+                            confirmButtonColor: `${red[500]}`,
+                            confirmButtonText: "Ok"
+                        })
+                        .then(() => {
+                            navigate("/products");
+                        });
+                }
             }
         }
     }, [getProductsCompleted, getOrderCompleted]);
@@ -124,10 +138,15 @@ export function CreateOrEditOrder() {
         setErrors(formValidation);
         if (!Object.keys(formValidation).length) {
             try {
+                const body = {
+                    ...formData,
+                    name: formatText(formData.name),
+                    address: formatText(formData.address)
+                };
                 if (order) {
-                    await editOrder(formData, id);
+                    await editOrder(body, id);
                 } else {
-                    await createOrder(formData);
+                    await createOrder(body);
                 }
                 navigate("/orders");
             } catch (error) {
@@ -221,10 +240,10 @@ export function CreateOrEditOrder() {
                                     name="productId"
                                     onChange={e => handleChange(e, index)}
                                 >
-                                    {products.map(elem => {
+                                    {products.map(product => {
                                         return (
-                                            <MenuItem key={elem.id} value={elem.id}>
-                                                {elem.name}
+                                            <MenuItem key={product.id} value={product.id}>
+                                                {product.name}
                                             </MenuItem>
                                         );
                                     })}
